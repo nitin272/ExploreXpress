@@ -64,3 +64,8 @@ Day 6: Train Booking Feature - Frontend
 4. Conduct initial testing of the train booking feature.
 5. Review the week's progress and plan for Week 2.
 6. Week 2: Feature Development
+
+
+
+
+deploy link : https://explore-xpress.vercel.app/
