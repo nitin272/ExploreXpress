@@ -1,12 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AuthForm from './components/Login';
+import Home from './Pages/Home'; 
 
+import AuthForm from './components/Login';
 
 const App = () => {
   return (
     <div>
-    <AuthForm />
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route path="/login" element={<AuthForm />} />
+          
+        </Routes>
+      </Router>
     </div>
   );
 }

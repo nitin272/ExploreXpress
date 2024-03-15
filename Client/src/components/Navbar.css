@@ -1,0 +1,197 @@
+:root {
+    --primary-color: #007bff;
+    --background-light: #ffffff;
+    --text-light: #333333;
+    --shadow-color: rgba(226, 94, 94, 0.1);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.5s ease;
+    opacity: 0;
+    animation: fadeIn ease 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+
+ 
+    transition: all 0.3s ease;
+}
+
+.logo-text {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2em;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.logo-text:hover {
+    transform: scale(1.05) rotate(-5deg);
+}
+
+.faCompass {
+    transition: transform 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        flex-direction:row;
+        padding: 20px;
+    }
+
+    .logo-text {
+        font-size: 1.5em;
+        margin: 0 auto;
+        justify-content: center;
+    }
+
+    .faCompass {
+        font-size: 0.8em;
+    }
+
+    .Login {
+        display: block;
+        width: auto;
+        padding: 5px 15px;
+        font-size: 1.2em;
+        margin: 20px auto 0;
+        color: var(--text-light);
+        background-color: var(--primary-color);
+        border: none;
+        border-radius: 5px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .Login:hover, .Login:active {
+        background-color: #0056b3;
+        transform: scale(0.98);
+    }
+}
+
+.new-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70%;
+    max-width: 300px;
+    height: 100%;
+    background-color: aliceblue;
+   backdrop-filter: blur(10px);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 20;
+    padding-top: 80px;
+    transform: translateX(-100%);
+    will-change: transform;
+}
+
+.new-navbar.active {
+    transform: translateX(0);
+}
+
+.cross {
+    color: #f80505;
+    font-size: 45px;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    animation: elastic .6s ease-in-out
+}
+
+.cross:hover {
+    transform: rotate(90deg);
+}
+
+.menu {
+    font-size: 2rem;
+    color: #000;
+    cursor: pointer;
+    animation: slideIn 0.5s ease forwards, bounce 1s ease infinite;
+    opacity: 0;
+    transform: translateX(-10%);
+}
+
+.new-navbar-options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: var(--text-light);
+    transition: color 0.3s ease;
+}
+
+.new-navbar-options li {
+    padding: 15px 20px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--shadow-color);
+    transition: all 0.3s ease, transform 0.5s ease;
+    transform: translateX(-20px);
+    opacity: 0;
+    animation: fadeInRight 0.5s ease forwards;
+}
+
+.new-navbar-options li:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    cursor: pointer;
+    transform: scale(1.05) translateX(10px);
+}
+
+@media screen and (min-width: 768px) {
+    .new-navbar {
+        width: 30%;
+        max-width: 400px;
+    }
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+@keyframes elastic {
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    75% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
