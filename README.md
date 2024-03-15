@@ -68,4 +68,6 @@ Day 6: Train Booking Feature - Frontend
 
 
 
-deploy link : https://explore-xpress.vercel.app/
+deploy link Login Page  : https://explore-xpress.vercel.app/
+
+ Deploy Link Home Page and navbar  = https://explore-xpress-lmws.vercel.app/
