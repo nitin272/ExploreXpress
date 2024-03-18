@@ -18,9 +18,7 @@ const Home = () => {
       })
       .catch(err => console.error("Error fetching data from backend:", err));
   }, []);
-  if (!cityData || !cityData.cities || cityData.cities.length === 0) {
-    return <div>Loading...</div>;
-  }
+
   const { city, places = [], restaurents = [], Hotels = [] } = cityData.cities[0];
 
   return (
