@@ -1,4 +1,8 @@
 
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Navbar from '../components/Navbar';
+
 // Simulated user authentication context (replace with real auth logic)
 const UserContext = React.createContext();
 
@@ -76,5 +80,3 @@ const Hotel = () => {
 };
 
 export default Hotel;
-
-
