@@ -11,7 +11,7 @@ import Train from './Pages/Train';
 const App = () => {
   return (
     <div>
-      <Router>
+       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path ="/Culture" element={<Culture />} />
@@ -21,7 +21,8 @@ const App = () => {
           <Route path="Hotel" element={<Hotel />} />
           <Route path="/trains" element={<Train />} />
         </Routes>
-      </Router>
+      </Router> 
+      
     </div>
   );
 }

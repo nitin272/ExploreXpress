@@ -1,16 +1,16 @@
 
-// const URI = 'mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority';
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const Model = require("./Model"); // Ensure this is the correct path to your model
+const Model = require("./Model");
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
 
-// Replace <username>, <password>, and <your-cluster-url> with your actual MongoDB Atlas connection details
+
 const URI = 'mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority';
 
 mongoose.connect(URI, { dbName: "Exploreexpress" })
@@ -24,7 +24,7 @@ mongoose.connect(URI, { dbName: "Exploreexpress" })
     console.error(err.message);
   });
 
-// Endpoint to get data
+
 app.get("/", (req, res) => {
   Model.find({})
     .lean()
