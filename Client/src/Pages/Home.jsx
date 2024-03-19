@@ -62,6 +62,7 @@ const Home = () => {
           </div>
           <h2>Explore the world with ExploreXpress</h2>
         </main>
+        
       </div>
       <section className="popular-places">
         <h4>Popular Places in {city}</h4>
