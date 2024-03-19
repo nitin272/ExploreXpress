@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHotel, faTrain, faUtensils, faLandmark, faPalette } from '@fortawesome/free-solid-svg-icons';
-import Navbar from '../components/Navbar'; 
+import Navbar from '../components/Navbar'; // Make sure this path matches your file structure
 
 const Home = () => {
   const [cityData, setCityData] = useState(null);
@@ -12,16 +12,19 @@ const Home = () => {
     fetch('http://localhost:4000/')
       .then(response => response.json())
       .then(data => {
+        // Assuming the backend sends an array and we're interested in the first city
         if (data && data.length > 0) {
           setCityData(data[0]);
         }
       })
       .catch(err => console.error("Error fetching data from backend:", err));
   }, []);
-  if (!cityData || !cityData.cities || cityData.cities.length === 0) {
-    return <div>Loading...</div>;
-  }
-  const { city, places = [], restaurents = [], Hotels = [] } = cityData.cities[0];
+
+  // Safe access to the properties of cityData
+  const city = cityData?.cities?.[0]?.city || '';
+  const places = cityData?.cities?.[0]?.places || [];
+  const restaurants = cityData?.cities?.[0]?.restaurents || [];
+  const hotels = cityData?.cities?.[0]?.Hotels || [];
 
   return (
     <>
@@ -75,7 +78,7 @@ const Home = () => {
       <section className="famous-restaurants">
         <h4>Famous Restaurants in {city}</h4>
         <div className="restaurants-container">
-          {restaurents.map(restaurant => (
+          {restaurants.map(restaurant => (
             <div key={restaurant.name} className="restaurant">
               <img src={restaurant.image1} alt={restaurant.name} />
               <h5>{restaurant.name}</h5>
@@ -87,7 +90,7 @@ const Home = () => {
       <section className="famous-hotels">
         <h4>Famous Hotels in {city}</h4>
         <div className="hotels-container">
-          {Hotels.map(hotel => (
+          {hotels.map(hotel => (
             <div key={hotel.name} className="hotel">
               <img src={hotel.image1} alt={hotel.name} />
               <h5>{hotel.name}</h5>
