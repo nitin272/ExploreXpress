@@ -20,11 +20,15 @@ const Home = () => {
       .catch(err => console.error("Error fetching data from backend:", err));
   }, []);
 
-  // Safe access to the properties of cityData
+
+
   const city = cityData?.cities?.[0]?.city || '';
   const places = cityData?.cities?.[0]?.places || [];
   const restaurants = cityData?.cities?.[0]?.restaurents || [];
   const hotels = cityData?.cities?.[0]?.Hotels || [];
+
+  const { city, places = [], restaurents = [], Hotels = [] } = cityData.cities[0];
+
 
   return (
     <>
