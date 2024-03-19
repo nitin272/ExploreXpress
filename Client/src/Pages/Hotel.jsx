@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+// Simulated user authentication context (replace with real auth logic)
+const UserContext = React.createContext();
+
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulate user login state
 
+  // Fetch hotels from backend
   useEffect(() => {
     axios.get('http://localhost:4000/')
       .then(response => {
@@ -24,8 +29,8 @@ const Hotel = () => {
       });
   }, []);
 
+  // Filter hotels based on search query
   useEffect(() => {
-  
     const result = hotels.filter(hotel =>
       hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       hotel.address.toLowerCase().includes(searchQuery.toLowerCase())
@@ -33,12 +38,22 @@ const Hotel = () => {
     setFilteredHotels(result);
   }, [searchQuery, hotels]);
 
+  // Handler for booking a hotel (placeholder for actual booking logic)
+  const handleBookHotel = (hotelId) => {
+    if (!isLoggedIn) {
+      alert("Please log in to book hotels.");
+      return;
+    }
+    // Here, you would add logic to book the hotel, such as sending a POST request to your backend
+    console.log(`Booking hotel with ID: ${hotelId}`);
+    alert(`Booked hotel with ID: ${hotelId}!`);
+  };
+
   return (
-    <>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Navbar />
       <div>
         <h2>All Cities Hotels</h2>
-
         <input
           type="text"
           placeholder="Search hotels..."
@@ -54,11 +69,12 @@ const Hotel = () => {
               <p>Rating: {hotel.Rating.trim()}</p>
               <p>Price: {hotel.Price}</p>
               <p>Address: {hotel.address}</p>
+              <button onClick={() => handleBookHotel(hotel.id)}>Book Now</button>
             </div>
           ))}
         </div>
       </div>
-    </>
+    </UserContext.Provider>
   );
 };
 
