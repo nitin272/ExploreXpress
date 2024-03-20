@@ -1,19 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import Navbar from '../components/Navbar';
 
-function Map() {
+
+const UserContext = React.createContext();
+
+const Restaurants = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/')
+      .then(response => {
+        const allRestaurants = response.data.reduce((acc, cityData) => {
+          const cityRestaurants = cityData.cities.reduce((cityAcc, city) => {
+            return cityAcc.concat(city.restaurents);
+          }, []);
+          return acc.concat(cityRestaurants);
+        }, []);
+        setRestaurants(allRestaurants);
+        setFilteredRestaurants(allRestaurants);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the restaurant data:', error);
+      });
+  }, []);
+
+ 
+  useEffect(() => {
+    const result = restaurants.filter(restaurant =>
+      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      restaurant.address.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredRestaurants(result);
+  }, [searchQuery, restaurants]);
+
+  const handleBookTable = (restaurantName) => {
+    if (!isLoggedIn) {
+      alert("Please log in to book tables.");
+      return;
+    }
+
+    console.log(`Booking table at: ${restaurantName}`);
+    alert(`Table booked at: ${restaurantName}!`);
+  };
+
   return (
-    <div>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d381424.5446175907!2d75.63688608439939!3d27.071230170982574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db512717f7595%3A0xa85a04fa771a275f!2sHyatt%20Regency%20Jaipur%20Mansarovar!5e0!3m2!1sen!2sin!4v1710219809340!5m2!1sen!2sin"
-        width="600"
-        height="450"
-        style={{ border: 0 }}
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      ></iframe>
-    </div>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <Navbar />
+      <div>
+        <h2>All Cities Restaurants</h2>
+        <input
+          type="text"
+          placeholder="Search restaurants..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ padding: '10px', marginBottom: '20px', width: '300px' }}
+        />
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+          {filteredRestaurants.map((restaurant, index) => (
+            <div key={index} style={{ width: '300px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', padding: '10px', borderRadius: '5px' }}>
+              <img src={restaurant.image1} alt={restaurant.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
+              <h3>{restaurant.name}</h3>
+              <p>Rating: {restaurant.Rating.trim()}</p>
+              <p>Address: {restaurant.address}</p>
+              <button onClick={() => handleBookTable(restaurant.name)}>Book Table</button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </UserContext.Provider>
   );
-}
+};
 
-export default Map;
+export default Restaurants;

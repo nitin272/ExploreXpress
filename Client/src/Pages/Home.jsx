@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHotel, faTrain, faUtensils, faLandmark, faPalette } from '@fortawesome/free-solid-svg-icons';
-import Navbar from '../components/Navbar'; // Make sure this path matches your file structure
+import Navbar from '../components/Navbar'; 
 
 const Home = () => {
   const [cityData, setCityData] = useState(null);
@@ -12,7 +12,7 @@ const Home = () => {
     fetch('http://localhost:4000/')
       .then(response => response.json())
       .then(data => {
-        // Assuming the backend sends an array and we're interested in the first city
+
         if (data && data.length > 0) {
           setCityData(data[0]);
         }
@@ -20,7 +20,6 @@ const Home = () => {
       .catch(err => console.error("Error fetching data from backend:", err));
   }, []);
 
-  // Safe access to the properties of cityData
   const city = cityData?.cities?.[0]?.city || '';
   const places = cityData?.cities?.[0]?.places || [];
   const restaurants = cityData?.cities?.[0]?.restaurents || [];

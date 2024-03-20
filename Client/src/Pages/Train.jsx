@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import Navbar from "../components/Navbar";
 import "./Train.css";
 
@@ -8,20 +9,37 @@ const Train = () => {
   const [date, setDate] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
+  const fetchTrains = async () => {
+    const options = {
+      method: 'GET',
+      url: 'https://irctc1.p.rapidapi.com/api/v1/searchTrain',
+      params: { query: from }, 
+      headers: {
+        'X-RapidAPI-Key': 'b36ecb5623msh532f6ff506ca988p1be5b2jsn5ebb790f733a',
+        'X-RapidAPI-Host': 'irctc1.p.rapidapi.com'
+      }
+    };
+
+    try {
+      const response = await axios.request(options);
+
+      console.log(response.data);
+   
+      setSearchResults(Array.isArray(response.data) ? response.data : []);
+    } catch (error) {
+      console.error(error);
+      setSearchResults([]); 
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const results = [
-      { id: 1, name: 'Express 101', from: 'Station 1', to: 'Station 2', departure: '08:00 AM', arrival: '10:00 AM' },
-      { id: 2, name: 'Express 202', from: 'Station 3', to: 'Station 4', departure: '09:00 AM', arrival: '11:30 AM' },
-    ];
-    setSearchResults(results);
+    fetchTrains();
   };
 
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       <div className='home__container'>
         <div className='home'>
           <p>Search Your Train</p>
@@ -29,30 +47,37 @@ const Train = () => {
             <div className='inputs'>
               <div className='from home__input'>
                 <p>FROM</p>
-                <select defaultValue='2'>
-                  <option value=''>Select City</option>
-                </select>
+                <input
+                  type="text"
+                  value={from}
+                  onChange={e => setFrom(e.target.value)}
+                  placeholder="Enter source station"
+                />
               </div>
               <div className='to home__input'>
                 <p>TO</p>
-                <select defaultValue='2'>
-                  <option value='dehli'>Select City</option>
-                </select>
+                <input
+                  type="text"
+                  value={to}
+                  onChange={e => setTo(e.target.value)}
+                  placeholder="Enter destination station"
+                />
               </div>
               <div className='departure home__input'>
                 <p>DEPARTURE DATE</p>
-                <input type="date" />
+                <input
+                  type="date"
+                  value={date}
+                  onChange={e => setDate(e.target.value)}
+                />
               </div>
             </div>
-            <div>
-              <button className='home__search' type="submit">SEARCH</button>
-            </div>
+            <button className='home__search' type="submit">SEARCH</button>
           </form>
         </div>
       </div>
       <h2 className="search-results-title">Search Results</h2>
       <div className="train-details">
-      
         {searchResults.map(train => (
           <div key={train.id} className="train-detail-item">
             <p><strong>Train Name:</strong> {train.name}</p>
