@@ -76,3 +76,4 @@ deploy link Login Page  : https://explore-xpress.vercel.app/
  Deploy Link Train-Frontend page  = https://explore-xpress-k8p8.vercel.app/
 Deploy link Hotel page  = https://explore-xpress-bjkl.vercel.app/
 deploy link subpages  = https://explore-xpress-bjkl.vercel.app/
+Deploy link Login auth = https://explore-xpress-efj1.vercel.app/login
