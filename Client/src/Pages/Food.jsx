@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
@@ -34,10 +35,55 @@ const Restaurants = () => {
   );
 
   const handleBookTable = restaurantName => {
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import Navbar from '../components/Navbar';
+
+
+const UserContext = React.createContext();
+
+const Restaurants = () => {
+  const [restaurants, setRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/')
+      .then(response => {
+        const allRestaurants = response.data.reduce((acc, cityData) => {
+          const cityRestaurants = cityData.cities.reduce((cityAcc, city) => {
+            return cityAcc.concat(city.restaurents);
+          }, []);
+          return acc.concat(cityRestaurants);
+        }, []);
+        setRestaurants(allRestaurants);
+        setFilteredRestaurants(allRestaurants);
+      })
+      .catch(error => {
+        console.error('There was an error fetching the restaurant data:', error);
+      });
+  }, []);
+
+ 
+  useEffect(() => {
+    const result = restaurants.filter(restaurant =>
+      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      restaurant.address.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredRestaurants(result);
+  }, [searchQuery, restaurants]);
+
+  const handleBookTable = (restaurantName) => {
+
     if (!isLoggedIn) {
       alert("Please log in to book tables.");
       return;
     }
+
+
+    console.log(`Booking table at: ${restaurantName}`);
+
     alert(`Table booked at: ${restaurantName}!`);
   };
 
