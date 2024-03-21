@@ -1,30 +1,36 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Form.css';
-import { Link, Route , useNavigate} from 'react-router-dom'; // Corrected 'Link' import
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const AuthForm = () => {
   const [isActive, setIsActive] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    navigate('/Home');
+  const apiUrl = "http://localhost:10000";
 
-    
-    event.preventDefault();
-
-    if (isActive) {
-      console.log('Registration Form Data:', { email, password, name });
-    } else {
-      console.log('Login Form Data:', { email, password });
+  const handleAuth = async (isSignUp, userData) => {
+    try {
+      const endpoint = isSignUp ? `${apiUrl}/api/auth/signup` : `${apiUrl}/api/auth/login`;
+      await axios.post(endpoint, userData);
+      
+      navigate('/'); // Redirect user to home page or dashboard as needed
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data.message : error.message);
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const userData = isActive ? { name, email, password } : { email, password };
+    handleAuth(isActive, userData);
+  };
+
   const handleGoogleSignIn = () => {
-    console.log('Sign in with Google');
+    window.location.href = `${apiUrl}/auth/google`;
   };
 
   return (
@@ -36,11 +42,8 @@ const AuthForm = () => {
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit">Sign Up</button>
-          <p>Or Sign up with</p>
           <div className="social-login">
-            <button type="button" className="google" onClick={handleGoogleSignIn}>
-            <img src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA" alt="" srcset="" />Continue with Google
-            </button>
+            <button type="button" className="google" onClick={handleGoogleSignIn}>Continue with Google</button>
           </div>
           <p>Already have an account? <button type="button" onClick={() => setIsActive(false)}>Login</button></p>
         </form>
@@ -50,11 +53,8 @@ const AuthForm = () => {
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit">Sign In</button>
-          <p>Or Login with</p>
           <div className="social-login">
-          <button type="button" className="google" onClick={handleGoogleSignIn}>
-            <img src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA" alt="" srcset="" />Continue with Google
-            </button>
+            <button type="button" className="google" onClick={handleGoogleSignIn}>Continue with Google</button>
           </div>
           <p>Don't have an account? <button type="button" onClick={() => setIsActive(true)}>Sign Up</button></p>
         </form>

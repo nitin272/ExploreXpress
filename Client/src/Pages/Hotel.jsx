@@ -1,10 +1,9 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
 // Simulated user authentication context (replace with real auth logic)
-const UserContext = React.createContext();
+const UserContext = createContext();
 
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
@@ -12,16 +11,24 @@ const Hotel = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulate user login state
 
+  // Helper function to process fetched data
+  const processHotelData = (data) => {
+    if (!Array.isArray(data)) return [];
+    return data.reduce((acc, cityData) => {
+      if (!cityData.cities) return acc;
+      const cityHotels = cityData.cities.reduce((cityAcc, city) => {
+        if (!city.Hotels) return cityAcc;
+        return cityAcc.concat(city.Hotels);
+      }, []);
+      return acc.concat(cityHotels);
+    }, []);
+  };
+
   // Fetch hotels from backend
   useEffect(() => {
     axios.get('http://localhost:4000/')
       .then(response => {
-        const allHotels = response.data.reduce((acc, cityData) => {
-          const cityHotels = cityData.cities.reduce((cityAcc, city) => {
-            return cityAcc.concat(city.Hotels);
-          }, []);
-          return acc.concat(cityHotels);
-        }, []);
+        const allHotels = processHotelData(response.data);
         setHotels(allHotels);
         setFilteredHotels(allHotels); 
       })
@@ -45,7 +52,6 @@ const Hotel = () => {
       alert("Please log in to book hotels.");
       return;
     }
-    // Here, you would add logic to book the hotel, such as sending a POST request to your backend
     console.log(`Booking hotel with ID: ${hotelId}`);
     alert(`Booked hotel with ID: ${hotelId}!`);
   };
