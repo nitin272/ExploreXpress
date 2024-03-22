@@ -7,6 +7,7 @@ import Culture from './Pages/Culture';
 import Places from './Pages/Places';
 import Food from './Pages/Food';
 import Train from './Pages/Train';
+import Account from './components/Account';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path ="/Culture" element={<Culture />} />
+          <Route path = "/Account" element={<Account />} />
           <Route path ="/Places" element={<Places />} />
           <Route path ="/Restaurent" element={<Food />} />
           <Route path="/login" element={<AuthForm />} />
