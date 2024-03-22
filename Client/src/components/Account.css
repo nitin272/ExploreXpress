@@ -1,0 +1,54 @@
+/* General page settings */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+  }
+  
+  /* Navbar styling */
+  .navbar {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 20px;
+  }
+  
+  /* Account container styling */
+  .account-container {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Welcome message */
+  .account-container h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* User details styling */
+  .account-container p {
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  /* User profile image */
+  .account-container img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-top: 20px;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .account-container {
+      padding: 15px;
+    }
+  }
+  

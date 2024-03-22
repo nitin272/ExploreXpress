@@ -2,69 +2,81 @@ import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
+// Simulated user authentication context (replace with real auth logic)
 const UserContext = createContext();
 
-const Restaurants = () => {
-  const [restaurants, setRestaurants] = useState([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+const Hotel = () => {
+  const [hotels, setHotels] = useState([]);
+  const [filteredHotels, setFilteredHotels] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulate user login state
 
+  // Helper function to process fetched data
+  const processHotelData = (data) => {
+    if (!Array.isArray(data)) return [];
+    return data.reduce((acc, cityData) => {
+      if (!cityData.cities) return acc;
+      const cityHotels = cityData.cities.reduce((cityAcc, city) => {
+        if (!city.Hotels) return cityAcc;
+        return cityAcc.concat(city.Hotels);
+      }, []);
+      return acc.concat(cityHotels);
+    }, []);
+  };
+
+  // Fetch hotels from backend
   useEffect(() => {
     axios.get('http://localhost:4000/')
       .then(response => {
-        const allRestaurants = response.data.reduce((acc, cityData) => {
-          const cityRestaurants = cityData.cities.reduce((cityAcc, city) => {
-            return cityAcc.concat(city.restaurents);
-          }, []);
-          return acc.concat(cityRestaurants);
-        }, []);
-        setRestaurants(allRestaurants);
-        setFilteredRestaurants(allRestaurants);
+        const allHotels = processHotelData(response.data);
+        setHotels(allHotels);
+        setFilteredHotels(allHotels); 
       })
       .catch(error => {
-        console.error('There was an error fetching the restaurant data:', error);
+        console.error('There was an error fetching the city data:', error);
       });
   }, []);
 
+  // Filter hotels based on search query
   useEffect(() => {
-    const result = restaurants.filter(restaurant =>
-      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      restaurant.address.toLowerCase().includes(searchQuery.toLowerCase())
+    const result = hotels.filter(hotel =>
+      hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      hotel.address.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setFilteredRestaurants(result);
-  }, [searchQuery, restaurants]);
+    setFilteredHotels(result);
+  }, [searchQuery, hotels]);
 
-  const handleBookTable = (restaurantName) => {
+  // Handler for booking a hotel (placeholder for actual booking logic)
+  const handleBookHotel = (hotelId) => {
     if (!isLoggedIn) {
-      alert("Please log in to book tables.");
+      alert("Please log in to book hotels.");
       return;
     }
-
-    console.log(`Booking table at: ${restaurantName}`);
-    alert(`Table booked at: ${restaurantName}!`);
+    console.log(`Booking hotel with ID: ${hotelId}`);
+    alert(`Booked hotel with ID: ${hotelId}!`);
   };
 
   return (
     <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <Navbar />
       <div>
-        <h2>All Cities Restaurants</h2>
+        <h2>All Cities Hotels</h2>
         <input
           type="text"
-          placeholder="Search restaurants..."
+          placeholder="Search hotels..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ padding: '10px', marginBottom: '20px', width: '300px' }}
         />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-          {filteredRestaurants.map((restaurant, index) => (
+          {filteredHotels.map((hotel, index) => (
             <div key={index} style={{ width: '300px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', padding: '10px', borderRadius: '5px' }}>
-              <img src={restaurant.image1} alt={restaurant.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
-              <h3>{restaurant.name}</h3>
-              <p>Rating: {restaurant.Rating.trim()}</p>
-              <p>Address: {restaurant.address}</p>
-              <button onClick={() => handleBookTable(restaurant.name)}>Book Table</button>
+              <img src={hotel.image1} alt={hotel.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
+              <h3>{hotel.name}</h3>
+              <p>Rating: {hotel.Rating.trim()}</p>
+              <p>Price: {hotel.Price}</p>
+              <p>Address: {hotel.address}</p>
+              <button onClick={() => handleBookHotel(hotel.id)}>Book Now</button>
             </div>
           ))}
         </div>
@@ -73,4 +85,4 @@ const Restaurants = () => {
   );
 };
 
-export default Restaurants;
+export default Hotel;

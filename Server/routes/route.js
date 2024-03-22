@@ -1,7 +1,7 @@
 // modelRoutes.js
 
 const express = require('express');
-const route = express.route();
+const route = express()
 const Model = require('../Models/Model');
 
 // Define the GET endpoint
@@ -9,9 +9,6 @@ route.get('/', (req, res) => {
   Model.find({})
     .lean()
     .then(data => {
-
-
-      
       res.json(data);
     })
     .catch(err => {

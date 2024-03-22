@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
@@ -7,42 +6,38 @@ const UserContext = createContext();
 
 const Restaurants = () => {
   const [restaurants, setRestaurants] = useState([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   useEffect(() => {
-    axios.get('http://localhost:4000/')
-      .then(response => {
-        const allRestaurants = response.data.reduce((acc, cityData) => {
-          const cityRestaurants = cityData.cities.reduce((cityAcc, city) => {
-            return cityAcc.concat(city.restaurents);
-          }, []);
-          return acc.concat(cityRestaurants);
-        }, []);
-        setRestaurants(allRestaurants);
-        setFilteredRestaurants(allRestaurants);
-      })
-      .catch(error => {
+    const fetchRestaurants = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/');
+        if (response.data && Array.isArray(response.data)) {
+          const allRestaurants = response.data.flatMap(cityData => 
+            cityData.cities ? cityData.cities.flatMap(city => 
+              city.restaurents ? city.restaurents : []) : []
+          );
+          setRestaurants(allRestaurants);
+        } else {
+          console.error('Unexpected response structure:', response.data);
+        }
+      } catch (error) {
         console.error('There was an error fetching the restaurant data:', error);
-      });
+      }
+    };
+    fetchRestaurants();
   }, []);
+  
+  const filteredRestaurants = restaurants.filter(({ name, address }) =>
+    name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    address.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  useEffect(() => {
-    const result = restaurants.filter(restaurant =>
-      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      restaurant.address.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredRestaurants(result);
-  }, [searchQuery, restaurants]);
-
-  const handleBookTable = (restaurantName) => {
+  const handleBookTable = restaurantName => {
     if (!isLoggedIn) {
       alert("Please log in to book tables.");
       return;
     }
-
-    console.log(`Booking table at: ${restaurantName}`);
     alert(`Table booked at: ${restaurantName}!`);
   };
 

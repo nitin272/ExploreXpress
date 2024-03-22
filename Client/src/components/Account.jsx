@@ -1,73 +1,63 @@
-Navbar.js
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { IoClose, IoMenu } from "react-icons/io5";
-import "./Navbar.css";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Account.css';
+import Navbar from "../components/Navbar";
 
-const Navbar = () => {
- return (
-   <header className="header">
-     <nav className="nav container">
-       <NavLink to="/" className="nav__logo">
-         Navigation Bar
-       </NavLink>
+const Account = () => {
+    const [userData, setUserData] = useState(null);
+    const navigate = useNavigate();
 
-       <div
-         className={"nav__menu"}
-         id="nav-menu"
-       >
-         <ul className="nav__list">
-           <li className="nav__item">
-             <NavLink to="/" className="nav__link">
-               Home
-             </NavLink>
-           </li>
-           <li className="nav__item">
-             <NavLink to="/news" className="nav__link">
-               News
-             </NavLink>
-           </li>
-           <li className="nav__item">
-             <NavLink
-               to="/about-us"
-               className="nav__link"
-             >
-               About Us
-             </NavLink>
-           </li>
-           <li className="nav__item">
-             <NavLink
-               to="/favorite"
-               className="nav__link"
-             >
-               Favorite
-             </NavLink>
-           </li>
-           <li className="nav__item">
-             <NavLink
-               to="/location"
-               className="nav__link"
-             >
-               Location
-             </NavLink>
-           </li>
-           <li className="nav__item">
-             <NavLink to="/get-started" className="nav__link nav__cta">
-               Get Started
-             </NavLink>
-           </li>
-         </ul>
-         <div className="nav__close" id="nav-close">
-           <IoClose />
-         </div>
-       </div>
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+        const { userId, token } = storedUser;
 
-       <div className="nav__toggle" id="nav-toggle">
-         <IoMenu />
-       </div>
-     </nav>
-   </header>
- );
+        if (!userId || !token) {
+            console.log('Redirecting to login page.');
+            navigate('/login');
+            return;
+        }
+        if (storedUser.username && storedUser.email) {
+            setUserData(storedUser);
+            return;
+        }
+
+        
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch(`http://localhost:4000/auth/user/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch user data: ${response.statusText}`);
+                }
+                const data = await response.json();
+                setUserData(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchUserData();
+    }, [navigate]);
+
+    return (
+        <>
+            <Navbar />
+            <div className="account-container">
+                {userData ? (
+                    <>
+                        <h1>Welcome, {userData.username}!</h1>
+                        <p>Email: {userData.email}</p>
+                        {userData.imageUrl && <img src={userData.imageUrl} alt="User Profile" />}
+                    </>
+                ) : <div>Please log in to view your account.</div>}
+            </div>
+        </>
+    );
 };
 
-export default Navbar;
+export default Account;
