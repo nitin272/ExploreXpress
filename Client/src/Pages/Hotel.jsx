@@ -2,16 +2,15 @@ import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
-// Simulated user authentication context (replace with real auth logic)
+
 const UserContext = createContext();
 
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
   const [filteredHotels, setFilteredHotels] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Simulate user login state
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
-  // Helper function to process fetched data
   const processHotelData = (data) => {
     if (!Array.isArray(data)) return [];
     return data.reduce((acc, cityData) => {
@@ -24,7 +23,7 @@ const Hotel = () => {
     }, []);
   };
 
-  // Fetch hotels from backend
+
   useEffect(() => {
     axios.get('http://localhost:4000/')
       .then(response => {
@@ -37,7 +36,7 @@ const Hotel = () => {
       });
   }, []);
 
-  // Filter hotels based on search query
+
   useEffect(() => {
     const result = hotels.filter(hotel =>
       hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -46,7 +45,7 @@ const Hotel = () => {
     setFilteredHotels(result);
   }, [searchQuery, hotels]);
 
-  // Handler for booking a hotel (placeholder for actual booking logic)
+ 
   const handleBookHotel = (hotelId) => {
     if (!isLoggedIn) {
       alert("Please log in to book hotels.");

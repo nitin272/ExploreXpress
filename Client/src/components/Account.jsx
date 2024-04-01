@@ -2,29 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Account.css';
 import Navbar from "../components/Navbar";
-
+import { FaEdit } from 'react-icons/fa'; 
 const Account = () => {
     const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
-        const { userId, token } = storedUser;
+        const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+      
+        const { userId, token, name, email, imageUrl } = storedUserData.user || storedUserData;
 
-        if (!userId || !token) {
+        if (!userId) {
             console.log('Redirecting to login page.');
             navigate('/login');
             return;
         }
-        if (storedUser.username && storedUser.email) {
-            setUserData(storedUser);
+        
+      
+        if ((name || storedUserData.username) && email) {
+            setUserData({
+                ...storedUserData.user, 
+                ...storedUserData, 
+            });
             return;
         }
 
-        
         const fetchUserData = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/auth/user/${userId}`, {
+                const response = await fetch(`https://explorexpress-4.onrender.com/auth/user/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -44,14 +49,23 @@ const Account = () => {
         fetchUserData();
     }, [navigate]);
 
+   
+    const userName = userData?.name || userData?.username;
+
     return (
         <>
             <Navbar />
             <div className="account-container">
                 {userData ? (
                     <>
-                        <h1>Welcome, {userData.username}!</h1>
-                        <p>Email: {userData.email}</p>
+                        <div className="user-detail">
+                            <h1>Welcome, {userName}!</h1>
+                            <FaEdit className="edit-icon" />
+                        </div>
+                        <div className="user-detail">
+                            <p>Email: {userData.email}</p>
+                            <FaEdit className="edit-icon" />
+                        </div>
                         {userData.imageUrl && <img src={userData.imageUrl} alt="User Profile" />}
                     </>
                 ) : <div>Please log in to view your account.</div>}
