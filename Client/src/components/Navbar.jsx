@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css'; // Ensure this matches the path to your CSS file
+import './Navbar.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCompass, faBars, faHome, faUsers, faStar, faEnvelope,
@@ -11,13 +11,20 @@ const Navbar = () => {
   const [newNavBar, setNewNavBar] = useState(false);
   const navigate = useNavigate();
 
-  // Check if user is logged in by looking for user data in localStorage
+
   const isLoggedIn = () => localStorage.getItem('user') !== null;
 
-  const handleLogout = () => {
-    localStorage.removeItem('user'); // Clear user data from localStorage
-    navigate('/login'); // Redirect to login page after logout
+  const getUserDetails = () => {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null; 
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem('user'); 
+    navigate('/login'); 
+  };
+
+  const userDetails = getUserDetails();
 
   return (
     <header className="header">
@@ -32,6 +39,11 @@ const Navbar = () => {
       </h1>
       
       <div className={newNavBar ? "new-navbar active" : "new-navbar"}>
+        {isLoggedIn() && (
+          <div className="user-info">
+            <h4>Welcome, {userDetails.name}</h4> 
+          </div>
+        )}
         <h3 className='cross'>
           <FontAwesomeIcon
             icon={faTimes}

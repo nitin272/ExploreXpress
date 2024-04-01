@@ -195,3 +195,22 @@ body, html {
         transform: scale(1);
     }
 }
+
+
+
+.user-info {
+    background-color: #90f9ff36;
+    color: #333;
+    padding: 20px;
+    border-bottom: 2px solid #f07575;
+    text-align: center;
+  }
+  
+  .user-info h4 {
+    margin: 0;
+    font-size: 35px;
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+  
+
