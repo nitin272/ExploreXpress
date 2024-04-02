@@ -1,0 +1,30 @@
+.loader-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .circular-loader {
+    border: 4px solid rgba(0,0,0,0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s ease infinite, color-change 3s ease infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes color-change {
+    0% { border-left-color: #09f; }
+    25% { border-left-color: #f44; }
+    50% { border-left-color: #9c0; }
+    75% { border-left-color: #fb0; }
+    100% { border-left-color: #09f; }
+  }
+  
