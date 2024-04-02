@@ -56,4 +56,37 @@ router.get('/auth/user/:userId', (req, res) => {
     });
 });
 
+
+
+
+router.put("/auth/user/update/:userId", async (req, res) => {
+  const { userId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: "Invalid User ID" });
+  }
+
+  const { name, email } = req.body;
+  try {
+      const user = await User.findById(userId);
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
+      }
+
+      // Update logic...
+      if (name) user.username = name;
+      if (email) user.email = email;
+
+      await user.save();
+      const updatedUserData = { ...user.toObject(), password: undefined };
+      res.json({ message: "User updated successfully", user: updatedUserData });
+
+  } catch (error) {
+      console.error("Error updating user:", error);
+      res.status(500).json({ message: "Failed to update user details", error: error.message });
+  }
+});
+
+
+
+
 module.exports = router;
