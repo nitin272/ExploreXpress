@@ -12,6 +12,8 @@ const AuthForm = () => {
 
   const apiUrl = "http://localhost:5000";
 
+  
+
   const handleAuth = async (isSignUp, userData) => {
     try {
       const endpoint = isSignUp ? `${apiUrl}/auth/signup` : `${apiUrl}/auth/login`;

@@ -15,6 +15,8 @@ const Account = () => {
             const { userId, token, name, email, imageUrl } = storedUserData.user || storedUserData;
 
             if (!userId) {
+
+                
                 console.log('Redirecting to login page.');
                 navigate('/login');
                 return;
