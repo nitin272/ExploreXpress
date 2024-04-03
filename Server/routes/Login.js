@@ -38,22 +38,30 @@ router.post("/auth/login", async (req, res) => {
     res.status(500).json({ message: "Error logging in", error: error.message });
   }
 });
-router.get('/auth/user/:userId', (req, res) => {
-  const { userId } = req.params;
-
-  User.findById(userId)
-    .lean()
-    .then(user => {
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      const userData = { ...user, password: undefined }; 
-      res.json(userData);
-    })
-    .catch(err => {
-      console.error("Error fetching user data:", err);
-      res.status(500).json({ message: "Error fetching user data", error: err.message });
-    });
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({}).select('-password'); // Exclude the password field
+    res.json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Error fetching users", error: error.message });
+  }
 });
+router.get('/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).select('-password'); // Excludes the password field
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    // Assuming the username field stores the name, adjust the response accordingly
+    res.json({name: user.username, ...user.toObject()});
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Error fetching user", error: error.message });
+  }
+});
+
+
 
 module.exports = router;

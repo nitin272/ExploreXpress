@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,22 +9,48 @@ import {
 
 const Navbar = () => {
   const [newNavBar, setNewNavBar] = useState(false);
+  const [userName, setUserName] = useState(""); // State to store user's name
   const navigate = useNavigate();
-
 
   const isLoggedIn = () => localStorage.getItem('user') !== null;
 
-  const getUserDetails = () => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null; 
-  };
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      const { userId, token } = user;
+
+      if (!userId) return;
+
+      try {
+        const response = await fetch(`http://localhost:4000/user/${userId}`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`,
+  },
+});
+
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch user details');
+        }
+
+        const data = await response.json();
+        setUserName(data.name); // Assuming the response contains the user's name
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+
+    if (isLoggedIn()) {
+      fetchUserName();
+    }
+  }, []); // This effect runs once on mount
 
   const handleLogout = () => {
     localStorage.removeItem('user'); 
     navigate('/login'); 
   };
-
-  const userDetails = getUserDetails();
 
   return (
     <header className="header">
@@ -41,7 +67,7 @@ const Navbar = () => {
       <div className={newNavBar ? "new-navbar active" : "new-navbar"}>
         {isLoggedIn() && (
           <div className="user-info">
-            <h4>Welcome, {userDetails.name}</h4> 
+            <h4>Welcome, {userName}</h4> 
           </div>
         )}
         <h3 className='cross'>

@@ -10,7 +10,7 @@ const AuthForm = () => {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  const apiUrl = "http://localhost:4000";
+  const apiUrl = "http://localhost:5000";
 
   const handleAuth = async (isSignUp, userData) => {
     try {
@@ -31,8 +31,9 @@ const AuthForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `${apiUrl}/auth/google/callback`;
+    window.location.href = `http://localhost:400/auth/google/callback`;
   };
+  
 
   return (
     <div className={`container ${isActive ? 'active' : ''}`} id="container">
