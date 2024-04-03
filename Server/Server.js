@@ -12,16 +12,16 @@ app.use(cors());
 const Login = require('./routes/route')
 const route = require('./routes/Login')
 // const auth = require("./routes/auth")
+const google = require("./routes/Google")
+require("dotenv").config();
 
 
-
-
-
+app.use(google);
 app.use(route);
   app.use(Login);
   // app.use(auth);
 
-const URI = 'mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority';
+const URI = process.env.Mongo_Url;
 
 mongoose.connect(URI, { dbName: "Exploreexpress" })
   .then(() => console.log("Connaection successful"))
@@ -29,5 +29,5 @@ mongoose.connect(URI, { dbName: "Exploreexpress" })
 
 
 
-app.listen(4000, () => console.log("Server is running on port 4000"));
+app.listen(4000, () => console.log("Server is running on port 5000"));
 

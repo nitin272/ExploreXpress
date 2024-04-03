@@ -31,8 +31,9 @@ const AuthForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `${apiUrl}/auth/google/callback`;
+    window.location.href = `http://localhost:400/auth/google/callback`;
   };
+  
 
   return (
     <div className={`container ${isActive ? 'active' : ''}`} id="container">
