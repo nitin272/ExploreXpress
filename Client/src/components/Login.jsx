@@ -10,7 +10,7 @@ const AuthForm = () => {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  const apiUrl = "http://localhost:4000";
+  const apiUrl = "https://explore-xpress.onrender.com";
 
   const handleAuth = async (isSignUp, userData) => {
     try {
@@ -31,7 +31,7 @@ const AuthForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `http://localhost:4000/auth/google/callback`;
+    window.location.href = `https://explore-xpress.onrender.com/auth/google/callback`;
   };
   
 
