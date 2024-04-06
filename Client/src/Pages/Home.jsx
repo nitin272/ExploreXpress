@@ -3,28 +3,41 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHotel, faTrain, faUtensils, faLandmark, faPalette } from '@fortawesome/free-solid-svg-icons';
-import Navbar from '../components/Navbar'; // Make sure this path matches your file structure
+import Navbar from '../components/Navbar'; // Adjust this path if necessary
 
 const Home = () => {
-  const [cityData, setCityData] = useState(null);
+  const [hotels, setHotels] = useState([]);
+  const [restaurants, setRestaurants] = useState([]);
+  const [places, setPlaces] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:4000/')
-      .then(response => response.json())
-      .then(data => {
-        // Assuming the backend sends an array and we're interested in the first city
-        if (data && data.length > 0) {
-          setCityData(data[0]);
-        }
-      })
-      .catch(err => console.error("Error fetching data from backend:", err));
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all([
+          fetch('http://localhost:4000/hotels'),
+          fetch('http://localhost:4000/restaurants'),
+          fetch('http://localhost:4000/places')
+        ]);
+        const data = await Promise.all(responses.map(response => response.json()));
+
+        setHotels(data[0]);
+        setRestaurants(data[1]);
+        setPlaces(data[2]);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  // Safe access to the properties of cityData
-  const city = cityData?.cities?.[0]?.city || '';
-  const places = cityData?.cities?.[0]?.places || [];
-  const restaurants = cityData?.cities?.[0]?.restaurents || [];
-  const hotels = cityData?.cities?.[0]?.Hotels || [];
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching data: {error}</p>;
 
   return (
     <>
@@ -64,38 +77,38 @@ const Home = () => {
         </main>
       </div>
       <section className="popular-places">
-        <h4>Popular Places in {city}</h4>
+        <h4>Popular Places</h4>
         <div className="places-container">
           {places.map(place => (
-            <div key={place.name} className="place">
+            <div key={place._id} className="place">
               <img src={place.image1} alt={place.name} />
               <h5>{place.name}</h5>
-              <p>{place.description}</p>
+              {/* <p>{place.description}</p> */}
             </div>
           ))}
         </div>
       </section>
       <section className="famous-restaurants">
-        <h4>Famous Restaurants in {city}</h4>
+        <h4>Famous Restaurants</h4>
         <div className="restaurants-container">
           {restaurants.map(restaurant => (
-            <div key={restaurant.name} className="restaurant">
+            <div key={restaurant._id} className="restaurant">
               <img src={restaurant.image1} alt={restaurant.name} />
               <h5>{restaurant.name}</h5>
-              <p>Rating: {restaurant.Rating}</p>
+              {/* <p>Rating: {restaurant.Rating}</p> */}
             </div>
           ))}
         </div>
       </section>
       <section className="famous-hotels">
-        <h4>Famous Hotels in {city}</h4>
+        <h4>Famous Hotels</h4>
         <div className="hotels-container">
           {hotels.map(hotel => (
-            <div key={hotel.name} className="hotel">
+            <div key={hotel._id} className="hotel">
               <img src={hotel.image1} alt={hotel.name} />
               <h5>{hotel.name}</h5>
-              <p>{hotel.address}</p>
-              <p>Rating: {hotel.Rating}</p>
+              {/* <p>{hotel.address}</p> */}
+              {/* <p>Rating: {hotel.Rating}</p> */}
             </div>
           ))}
         </div>

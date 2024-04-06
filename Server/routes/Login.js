@@ -40,7 +40,7 @@ router.post("/auth/login", async (req, res) => {
 });
 router.get('/users', async (req, res) => {
   try {
-    const users = await User.find({}).select('-password'); // Exclude the password field
+    const users = await User.find({}).select('-password'); 
     res.json(users);
   } catch (error) {
     console.error("Error fetching users:", error);
@@ -50,11 +50,11 @@ router.get('/users', async (req, res) => {
 router.get('/user/:userId', async (req, res) => {
   const { userId } = req.params;
   try {
-    const user = await User.findById(userId).select('-password'); // Excludes the password field
+    const user = await User.findById(userId).select('-password'); 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    // Assuming the username field stores the name, adjust the response accordingly
+
     res.json({name: user.username, ...user.toObject()});
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -62,6 +62,46 @@ router.get('/user/:userId', async (req, res) => {
   }
 });
 
+
+router.post('/verify-password', async (req, res) => {
+  const { userId, password } = req.body;
+  
+  try {
+    const user = await User.findById(userId);
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      res.json({ message: "Password verified successfully" });
+    } else {
+      res.status(401).json({ message: "Invalid password" });
+    }
+  } catch (error) {
+    console.error("Error verifying password:", error);
+    res.status(500).json({ message: "Error verifying password", error: error.message });
+  }
+});
+
+router.put('/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const updates = req.body; 
+
+  try {
+    const user = await User.findByIdAndUpdate(userId, { 
+      username: updates.name, 
+      email: updates.email 
+    }, { new: true }).select('-password'); 
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+    res.json({ message: "User updated successfully", user });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating user", error: error.message });
+  }
+});
 
 
 module.exports = router;

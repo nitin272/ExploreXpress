@@ -2,57 +2,46 @@ import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 
-
 const UserContext = createContext();
 
 const Hotel = () => {
   const [hotels, setHotels] = useState([]);
-  const [filteredHotels, setFilteredHotels] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
-  const processHotelData = (data) => {
-    if (!Array.isArray(data)) return [];
-    return data.reduce((acc, cityData) => {
-      if (!cityData.cities) return acc;
-      const cityHotels = cityData.cities.reduce((cityAcc, city) => {
-        if (!city.Hotels) return cityAcc;
-        return cityAcc.concat(city.Hotels);
-      }, []);
-      return acc.concat(cityHotels);
-    }, []);
-  };
-
 
   useEffect(() => {
-    axios.get('http://localhost:4000/')
+    axios.get('http://localhost:4000/hotels') 
       .then(response => {
-        const allHotels = processHotelData(response.data);
-        setHotels(allHotels);
-        setFilteredHotels(allHotels); 
+        setHotels(response.data);
       })
       .catch(error => {
-        console.error('There was an error fetching the city data:', error);
+        console.error('There was an error fetching the hotels data:', error);
       });
   }, []);
 
-
-  useEffect(() => {
-    const result = hotels.filter(hotel =>
-      hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hotel.address.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredHotels(result);
-  }, [searchQuery, hotels]);
-
  
+  const filteredHotels = searchQuery.length > 0
+    ? hotels.filter(hotel =>
+        hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        hotel.address.toLowerCase().includes(searchQuery.toLowerCase()))
+    : hotels;
+
   const handleBookHotel = (hotelId) => {
     if (!isLoggedIn) {
       alert("Please log in to book hotels.");
       return;
     }
-    console.log(`Booking hotel with ID: ${hotelId}`);
-    alert(`Booked hotel with ID: ${hotelId}!`);
+  
+    axios.get(`http://localhost:4500/hotel/${hotelId}`)
+      .then(response => {
+        console.log('Hotel data:', response.data);
+        alert(`Booked hotel with ID: ${hotelId}! Name: ${response.data.name}`);
+      })
+      .catch(error => {
+        console.error('There was an error booking the hotel:', error);
+        alert('Failed to book the hotel.');
+      });
   };
 
   return (
@@ -69,13 +58,13 @@ const Hotel = () => {
         />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
           {filteredHotels.map((hotel, index) => (
-            <div key={index} style={{ width: '300px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', padding: '10px', borderRadius: '5px' }}>
+            <div key={hotel._id} style={{ width: '300px', boxShadow: '0 2px 5px rgba(0,0,0,0.1)', padding: '10px', borderRadius: '5px' }}>
               <img src={hotel.image1} alt={hotel.name} style={{ width: '100%', height: '200px', objectFit: 'cover', borderRadius: '5px' }} />
               <h3>{hotel.name}</h3>
-              <p>Rating: {hotel.Rating.trim()}</p>
+              <p>Rating: {hotel.Rating}</p>
               <p>Price: {hotel.Price}</p>
               <p>Address: {hotel.address}</p>
-              <button onClick={() => handleBookHotel(hotel.id)}>Book Now</button>
+              <button onClick={() => handleBookHotel(hotel._id)}>Book Now</button>
             </div>
           ))}
         </div>
