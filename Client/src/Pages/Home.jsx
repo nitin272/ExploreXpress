@@ -16,9 +16,9 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const responses = await Promise.all([
-          fetch('http://localhost:4000/hotels'),
-          fetch('http://localhost:4000/restaurants'),
-          fetch('http://localhost:4000/places')
+          fetch('https://explore-xpress.onrender.com/hotels'),
+          fetch('https://explore-xpress.onrender.com/restaurants'),
+          fetch('https://explore-xpress.onrender.com/places')
         ]);
         const data = await Promise.all(responses.map(response => response.json()));
 

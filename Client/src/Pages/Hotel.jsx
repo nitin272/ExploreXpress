@@ -11,7 +11,7 @@ const Hotel = () => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:4000/hotels') 
+    axios.get('https://explore-xpress.onrender.com/hotels') 
       .then(response => {
         setHotels(response.data);
       })
@@ -33,7 +33,7 @@ const Hotel = () => {
       return;
     }
   
-    axios.get(`http://localhost:4500/hotel/${hotelId}`)
+    axios.get(`https://explore-xpress.onrender.com/hotel/${hotelId}`)
       .then(response => {
         console.log('Hotel data:', response.data);
         alert(`Booked hotel with ID: ${hotelId}! Name: ${response.data.name}`);

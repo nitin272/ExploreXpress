@@ -20,7 +20,7 @@ const Account = () => {
                 return;
             }
             try {
-                const response = await fetch(`http://localhost:4000/user/${userId}`, {
+                const response = await fetch(`https://explore-xpress.onrender.com/user/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const Account = () => {
         const { userId, token } = storedUserData.user || storedUserData;
 
         try {
-            const response = await fetch('http://localhost:4000/verify-password', {
+            const response = await fetch('https://explore-xpress.onrender.com/verify-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

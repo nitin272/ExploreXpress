@@ -6,7 +6,7 @@ const FamousPlaces = () => {
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/places') 
+    axios.get('https://explore-xpress.onrender.com/places') 
       .then(response => {
         setPlaces(response.data);
       })
