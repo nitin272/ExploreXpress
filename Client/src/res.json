@@ -1,0 +1,155 @@
+[
+    {
+        "city": "Jaipur",
+        "name": "Hawa Mahal (Palace of Winds)",
+        "description": "Hawa Mahal, also known as the Palace of Winds, is an iconic structure located in Jaipur, Rajasthan, India. Built in 1799 by Maharaja Sawai Pratap Singh, this five-story building is a stunning example of Rajput architecture combined with Islamic Mughal influences. Constructed with red and pink sandstone, Hawa Mahal is renowned for its 953 small windows, or 'Jharokhas,' which were designed to allow royal ladies to observe everyday life and festivals celebrated in the street below without being seen. Its unique façade resembling a honeycomb and its intricate latticework not only facilitated privacy but also allowed cool air to circulate, effectively making the palace an early form of air conditioning. This architectural marvel, with its blend of beauty and practicality, stands as a testament to the ingenuity of its creators and remains a popular tourist attraction in Jaipur.",
+        "image1": "https://media.istockphoto.com/id/482557081/photo/hawa-mahal-jaipur-india.jpg?s=612x612&w=0&k=20&c=A6qCUjoNH74nXCkB07RNgK3eIt2mun8PgsLPw9dNkVI=",
+        "image2": "https://static.toiimg.com/thumb/msid-48774245,width=1200,height=900/48774245.jpg",
+        "address": "Hawa Mahal Rd, Badi Choupad, J.D.A. Market, Pink City, Jaipur, Rajasthan 302002",
+        "coordinates": "26.924170133426667, 75.82663929402648",
+        "Link": "https://en.wikipedia.org/wiki/Hawa_Mahal",
+        "Timing": "9 am-4:30 pm",
+        "Cost": "50"
+    },
+    {
+        "city": "Jaipur",
+        "name": "Amber Fort",
+        "description": "A grand fort and palace made of red sandstone and marble, located on a hill. You can take an elephant ride up to the fort for a truly royal experience.",
+        "image1": "https://w0.peakpx.com/wallpaper/159/511/HD-wallpaper-amber-fort-jaipur-bing-amer-fort.jpg",
+        "image2": "https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2023/12/22/cbcf2e7b9e8957bab80952fd7cdbf7d8_1000x1000.jpg",
+        "address": "Devisinghpura, Amer, Jaipur, Rajasthan 302001",
+        "coordinates": "26.985639387341926, 75.85129172808622",
+        "Cost": "100",
+        "Link": "https://en.wikipedia.org/wiki/Amber_Fort",
+        "Timing": "8 am-9 pm"
+    },
+    {
+        "city": "Jaipur",
+        "name": "Jantar Mantar",
+        "description": "An astronomical observatory with architectural instruments featuring giant sundials, a cosmic calendar, and other cool astronomical tools. It's a UNESCO World Heritage Site.",
+        "image1": "https://media.istockphoto.com/id/487736282/photo/jantar-mantar-new-delhi-india-cngltrv1109.jpg?s=612x612&w=0&k=20&c=51feEMm4c4pPtpAh2sxLHnwSpJVkDUVJySrulcbZPDM=",
+        "image2": "https://jaipurtourism.co.in/images/places-to-visit/header/jantar-mantar-jaipur-entry-fee-timings-holidays-reviews-header.jpg",
+        "address": "J6G8+RMC, Connaught Place, Sansad Marg, New Delhi, Delhi 110001",
+        "coordinates": "28.62718651791961, 77.21655159408384",
+        "Cost": "50",
+        "Link": "https://en.wikipedia.org/wiki/Jantar_Mantar",
+        "Timing": "9 am-4:30 pm"
+    },
+    {
+        "city": "Jaipur",
+        "name": "City Palace",
+        "description": "A sprawling complex of courtyards, gardens, and buildings that was the home of the maharajas of Jaipur. It is part museum and part palace, so you can see the royal apartments and a vast collection of artifacts",
+        "image1": "https://t4.ftcdn.net/jpg/01/86/03/91/360_F_186039131_DtzFlukfaDy0Fdsgq6HzJwGGJ1II5Ls9.jpg",
+        "image2": "https://www.weddingsbyneerajkamra.com/wedding-venue/jaipur/city-palace-jaipur/images/slide4.jpg",
+        "address": "Gangori Bazaar, J.D.A. Market, Pink City, Jaipur, Rajasthan 302002",
+        "coordinates": "26.926578689842678, 75.82349973917373",
+        "Cost": "100",
+        "Link": "https://en.wikipedia.org/wiki/City_Palace,_Jaipur.",
+        "Timing": "9:30 am-7:30 pm"
+    },
+    {
+        "city": "Jaipur",
+        "name": "Nahargarh Fort",
+        "description": "Another fort with stunning views of the city. It was used as a retreat for the royal family and also housed a top-notch cannon foundry.",
+        "image1": "https://t3.ftcdn.net/jpg/05/28/42/66/360_F_528426601_QC8YBKmutIC5PdAlXjWszoaNhH9VnGTp.jpg",
+        "image2": "https://media.istockphoto.com/id/615625348/photo/nahargarh-fort.jpg?s=612x612&w=0&k=20&c=bDq_amci2S0uyvo6hsJCwiyZWuj2wkD2EsMFWaOxJ5s=",
+        "address": "Krishna Nagar, Brahampuri, Jaipur, Rajasthan 302007",
+        "coordinates": "26.94025195750273, 75.81711239773664",
+        "Cost": "50",
+        "Link": "https://en.wikipedia.org/wiki/Nahargarh_Fort",
+        "Timing": "10 am-10 pm"
+    },
+    {
+        "city": "Jaipur",
+        "name": "Jal Mahal",
+        "description": "This palace rises fairy-tale like from the center of Man Sagar Lake. It's a beautiful sight, especially in the morning light. You can't go inside the palace itself, but you can take a boat ride on the lake for a closer look.",
+        "image1": "https://media.istockphoto.com/id/938975958/photo/jal-mahal-water-palace-jaipur-rajasthan-with-landscape-at-sunset.jpg?s=612x612&w=0&k=20&c=MSpEwtV35btQgqL6E4bcpkUuOsyVFLsuEQJMWv5umDg=",
+        "image2": "https://www.theleela.com/prod/content/assets/styles/tl_1920_735/public/aio-banner/dekstop/Explore-Jal-Mahal-in-Jaipur.jpg?VersionId=KjTnMkQbZqGY5nASzOS5PTo7T_IsvhL4&itok=6q9Y5bwb",
+        "address": "Jal Mahal, Amer, Jaipur, Rajasthan 302002",
+        "coordinates": "26.954940610377115, 75.84664862002158",
+        "Link": "https://en.wikipedia.org/wiki/Jal_Mahal",
+        "Timing": "6 am-6 pm"
+    },
+    {
+        "city": "Jodhpur",
+        "name": "Mehrangarh Fort",
+        "description": "An imposing fort perched on a hilltop, offering panoramic views of the Blue City. Inside the fort, you'll find museums with displays on weapons, textiles, and the history of Jodhpur.",
+        "image1": "https://t3.ftcdn.net/jpg/03/22/52/98/360_F_322529875_xskoq6Pg8vzxnDR3FNigstBWZAC2g14U.jpg",
+        "image2": "https://media.istockphoto.com/id/921518960/photo/the-blue-city-and-mehrangarh-fort-in-jodhpur-rajasthan-india.webp?b=1&s=170667a&w=0&k=20&c=6a8i7n3mQV4XNNetTd4ltc-KZ7INSAGBkVjNFmCHnRo=",
+        "address": "Sodagaran Mohalla, Jodhpur, Rajasthan 342001",
+        "coordinates": "26.29803828242717, 73.01812048422518",
+        "Cost": "100",
+        "Link": "https://en.wikipedia.org/wiki/Mehrangarh",
+        "Timing": "9 am-5 pm"
+    },
+    {
+        "city": "Jodhpur",
+        "name": "Jaswant Thada",
+        "description": "A white marble mausoleum intricately carved and a popular tourist spot. It's known for its dazzling collection of cenotaphs and its serene gardens.",
+        "image1": "https://jodhpurtourism.in/images/places-to-visit/headers/jaswant-thada-jodhpur-entry-fee-timings-holidays-reviews-header.jpg",
+        "image2": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Jaswant_Thada_Dawn.jpg",
+        "address": "Lawaran, Jodhpur, Rajasthan 342001",
+        "coordinates": "26.30416710241272, 73.02538275353415",
+        "Cost": "30",
+        "Link": "https://en.wikipedia.org/wiki/Jaswant_Thada",
+        "Timing": "9 am-5:30 pm"
+    },
+    {
+        "city": "Jodhpur",
+        "name": "Umaid Bhawan Palace",
+        "description": "A grand and luxurious palace, now part of a Taj Group hotel. It's one of the largest private residences in the world and is built in the Indo-Saracenic style, which combines elements of Western and Indian architecture.",
+        "image1": "https://www.kayak.co.in/rimg/himg/e1/31/f8/leonardo-1124409-Baradari_Dining_O-762078.jpg?width=1366&height=768&crop=true",
+        "image2": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Umaid_Bhawan_Palace.jpg/800px-Umaid_Bhawan_Palace.jpg",
+        "address": "Cantt Area, Jodhpur, Rajasthan 342006",
+        "coordinates": "26.28111635546709, 73.04743094189743",
+        "Cost": "100",
+        "Link": "https://en.wikipedia.org/wiki/Umaid_Bhawan_Palace",
+        "Timing": "10 am-4:30 pm"
+    },
+    {
+        "city": "Jodhpur",
+        "name": "Mandore Gardens",
+        "description": "A series of royal gardens dating back to the 14th century. The gardens are laid out in the Mughal style and feature fountains, courtyards, and pavilions.",
+        "image1": "data:image/jpeg;base64,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",
+        "image2": "https://media-cdn.tripadvisor.com/media/attractions-splice-spp-720x480/0b/7a/6c/ec.jpg",
+        "address": "Mandore area Mandore garden, Rajasthan 342007",
+        "coordinates": "26.350198804235426, 73.03720134881173",
+        "Cost": "Free",
+        "Link": "https://en.wikipedia.org/wiki/Mandore",
+        "Timing": "24 Hours"
+    },
+    {
+        "city": "Jodhpur",
+        "name": "Mehrangarh Fort Museum",
+        "description": "Museum showcasing artifacts, textiles, and weaponry related to the history of Mehrangarh Fort and the region.",
+        "image1": "https://img.onmanorama.com/content/dam/mm/en/travel/beyond-kerala/images/2020/1/18/moti-mahal-jodhpur.jpg",
+        "image2": "https://media-cdn.tripadvisor.com/media/photo-s/01/1e/6a/86/museum-at-mehrangarh.jpg",
+        "address": "Sodagaran Mohalla, Jodhpur, Rajasthan 342001",
+        "coordinates": "26.297817058590482, 73.01820631491638",
+        "Cost": "100",
+        "Link": "https://en.wikipedia.org/wiki/Mehrangarh",
+        "Timing": "9 am-5 pm"
+    },
+    {
+        "city": "Jodhpur",
+        "name": "Rao Jodha Desert Rock Park",
+        "description": "A park featuring arid desert vegetation, walking trails, and views of the surrounding landscape and Mehrangarh Fort.",
+        "image1": "https://jodhpurtourism.in/images/places-to-visit/headers/rao-jodha-desert-rock-park-jodhpur-entry-fee-timings-holidays-reviews-header.jpg",
+        "image2": "https://bl-i.thgim.com/public/specials/india-interior/8oavhv/article26749633.ece/alternates/LANDSCAPE_1200/Bl06parkentrancejpg",
+        "address": "8237+5QG, Mehrangarh, Fort Rd, Kabir Nagar, Jodhpur, Rajasthan 342001",
+        "coordinates": "26.304940591229908, 73.01677251120702",
+        "Cost": "100",
+        "Link": "https://en.wikipedia.org/wiki/Rao_Jodha_Desert_Rock_Park",
+        "Timing": "7 am-6:15 pm"
+    }
+
+
+
+]
+   
+
+
+
+
+
+

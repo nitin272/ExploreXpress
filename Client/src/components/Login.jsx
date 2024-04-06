@@ -31,7 +31,7 @@ const AuthForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `http://localhost:400/auth/google/callback`;
+    window.location.href = `http://localhost:4000/auth/google/callback`;
   };
   
 
