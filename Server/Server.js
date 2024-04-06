@@ -28,7 +28,7 @@ const Places = require('./routes/Places')
 
 const URI = process.env.Mongo_Url;
 
-mongoose.connect(URI, { dbName: "Exploreexpress" })
+mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority", { dbName: "Exploreexpress" })
   .then(() => console.log("Connection successful"))
   .catch(err => console.error(err.message));
 
