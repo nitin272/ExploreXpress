@@ -10,7 +10,7 @@ const Restaurants = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    axios.get('https://explore-xpress.onrender.com/restaurants')
+    axios.get('http://localhost:4000/restaurants')
       .then(response => {
         setRestaurants(response.data);
       })

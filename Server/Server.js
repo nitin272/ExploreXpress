@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 const User = require("./Models/Login"); 
 const app = express();
 const secretKey = "Nitin"; 
+const path = require('path');
+
+// Serve static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(cors());
 
@@ -28,10 +32,8 @@ const Places = require('./routes/Places')
 
 const URI = process.env.Mongo_Url;
 
-mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority", { dbName: "Exploreexpress" })
+mongoose.connect(URI, { dbName: "Exploreexpress" })
   .then(() => console.log("Connection successful"))
-  .catch(err => console.error(err.message));
-
 
 
 app.listen(4000, () => console.log("Server is running on port 4000"));

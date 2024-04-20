@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import LoadingSpinner from './Load';
-import './Account.css'; // Ensure this CSS file is updated according to the new styles
-
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import './Account.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Account = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -20,7 +21,7 @@ const Account = () => {
                 return;
             }
             try {
-                const response = await fetch(`https://explore-xpress.onrender.com/user/${userId}`, {
+                const response = await fetch(`http://localhost:4000/user/${userId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -38,7 +39,6 @@ const Account = () => {
                 setLoading(false);
             }
         };
-
         fetchUserData();
     }, [navigate]);
 
@@ -57,7 +57,7 @@ const Account = () => {
         const { userId, token } = storedUserData.user || storedUserData;
 
         try {
-            const response = await fetch('https://explore-xpress.onrender.com/verify-password', {
+            const response = await fetch('http://localhost:4000/verify-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,8 +98,11 @@ const Account = () => {
             if (!response.ok) {
                 throw new Error('Failed to update user data');
             }
-            const updatedData = await response.json();
-            setUserData(updatedData.user);
+            const responseData = await response.json(); // Get the full response JSON
+            if (!responseData.user) {
+                throw new Error('User data missing in response');
+            }
+            setUserData(responseData.user); // Correctly access the user object
             setIsEditing(false);
         } catch (error) {
             alert('Failed to update user data. Please try again later.');
@@ -138,15 +141,19 @@ const Account = () => {
                         <div className='profileInfo'>
                             {isEditing ? (
                                 <>
-                                    <input type="text" className='NameInput' defaultValue={userData.name} placeholder="Name"/>
-                                    <input type="text" className='EmailInput' defaultValue={userData.email} placeholder="Email"/>
-                                    <button className='EditBtn' onClick={handleSubmitEdit}>Save</button>
+                                    <form onSubmit={handleSubmitEdit}>
+                                        <input type="text" name="name" className='NameInput' defaultValue={userData.name} placeholder="Name"/>
+                                        <input type="text" name="email" className='EmailInput' defaultValue={userData.email} placeholder="Email"/>
+                                        <button type="submit" className='save' style={{backgroundColor:'rgb(132, 231, 125)' }}>Save</button>
+                                    </form>
                                 </>
                             ) : (
                                 <>
                                     <div className='NameInput2'>{userData.name}</div>
                                     <div className='EmailInput'>{userData.email}</div>
-                                    <button className='EditBtn' onClick={() => setIsEditing(true)}>Edit</button>
+                                    <button className='EditButtton' onClick={toggleEdit}>
+                                    Edit <FontAwesomeIcon icon={faEdit} />
+    </button>
                                 </>
                             )}
                         </div>
@@ -156,8 +163,8 @@ const Account = () => {
                 )}
             </div>
             <div>
-                <button className="LogoutBtn" onClick={handleLogout}>Logout</button>
-                <button className="HomeBtn" onClick={() => navigate('/')}>Home</button>
+        
+                <button className="HomeButon" onClick={() => navigate('/')}>Home</button>
             </div>
         </div>
     );

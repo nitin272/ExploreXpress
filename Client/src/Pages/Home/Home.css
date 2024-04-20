@@ -1,0 +1,318 @@
+
+User
+:root {
+    --primary-color: #1a84ef;
+    --background-light: #f5adad;
+    --text-light: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Naviagtion options and image and heading */
+.heading{
+  font-size: 6vh;
+  color: rgba(33, 166, 255, 0.677);
+  margin-right: 80vh;
+}
+
+.home-container {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.hero-section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+    background: url('../../assets/person.jpg') no-repeat center center;
+    background-size: cover;
+    color: var(--text-light);
+    flex: 1;
+}
+
+.navigation-options {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    font-size: 20px;
+    left: 50%;
+    height: 13vh;
+    align-content: center;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: rgba(176, 217, 218, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation-options ul {
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    flex-direction: row;
+    margin: 0;
+}
+
+.navigation-options li {
+    padding: 10px;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    margin-top: 8px;
+    font-weight: 800;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 15px;
+}
+
+ .navigation-options li:hover {
+    transform: scale(1.3);
+    transition: transform 0.5s ease;
+} 
+
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+} 
+
+
+
+@media screen and (min-width: 380px) and (max-width: 720px) {
+
+  body, html {
+    font-size: calc(12px + (16 - 12) * ((100vw - 360px) / (720 - 360))); /* Responsive font size */
+  }
+
+  .home-container {
+    height: auto;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 70vh;
+    max-width: 100%; 
+    margin: 0 auto; 
+  }
+
+  .hero-section {
+    padding: 0.5rem;
+    flex-direction: column;
+  }
+
+  .hero-section h2 {
+    font-size: 3.5vw; 
+    margin: 0;
+  }
+
+  .navigation-options {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    font-size: 3vw; 
+    left: 50%;
+    height: 13vh;
+    transform: translateX(-50%);
+    padding: 1rem;
+    background-color: rgba(176, 217, 218, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    list-style: none;
+    margin: 0;
+  }
+
+  .navigation-options ul {
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  .navigation-options li {
+    padding: 0.2rem; 
+    width: 95%;
+    font-weight: bold;
+  }
+
+  .offers-section, .footer {
+    padding: 1rem 0.5rem; 
+  }
+
+  .offer, .place, .restaurant, .hotel {
+    flex-basis: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 5px 0;
+    box-shadow: none;
+  }
+
+  .places-container, .restaurants-container, .hotels-container {
+    gap: 5px;
+    
+  }
+
+  .popular-places h4, .famous-restaurants h4, .famous-hotels h4 {
+    font-size: 4vw; 
+  }
+
+  .place-details, .restaurant-details, .hotel-details {
+    font-size: calc(16px + (18 - 16) * ((100vw - 360px) / (720 - 360))); /* Responsive font size */
+    padding: 0.5rem;
+  }
+
+}
+@media screen and (max-width: 380px) {
+  body, html {
+      font-size: 12px; 
+  }
+
+    .heading {
+      white-space: normal; 
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #000000;
+      line-height: 1.4; 
+      max-width: 50%;
+      margin: auto; 
+      display: block;
+      text-align: center; 
+  }
+   
+  .home-container {
+      height: 60vh; 
+      width: 100%; 
+  }
+
+  .hero-section {
+      padding: 5px; 
+      flex-direction: column; 
+  }
+
+  .navigation-options {
+      top: 15px;
+      font-size: 10px; 
+      padding: 2px; 
+      width: 98%;
+      height: 9vh; 
+      background-color: rgba(176, 217, 218, 0.8); 
+      flex-wrap: wrap; 
+  }
+
+  .navigation-options ul {
+      gap: 5px; 
+  }
+
+  .navigation-options li {
+      padding: 2px; 
+      width: 97%;
+      font-weight: bold;
+    }
+
+  .navigation-options li:hover {
+      transform: scale(1.1); 
+      transition: transform 0.3s ease; 
+  }
+}
+
+
+
+
+
+.famous-restaurants, .famous-hotels, .popular-places {
+  margin: 40px 0;
+  overflow: hidden; 
+}
+
+.places-container, .restaurants-container, .hotels-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 20px;
+  gap: 30px;
+  scroll-behavior: smooth;
+}
+
+.main-heading{
+  font-size: 4vh;
+  color:#1a84ef;
+  margin-left: 2vh;
+}
+
+
+.place, .restaurant, .hotel {
+  flex: 0 0 auto;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 15px;
+  font-weight: 400;
+  font-size: 20px;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.place:hover, .restaurant:hover, .hotel:hover {
+  transform: translateY(-10px);
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+}
+
+.place img, .restaurant img, .hotel img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+@keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  .place:hover .place-details,
+  .restaurant:hover .restaurant-details,
+  .hotel:hover .hotel-details {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .place-details, .restaurant-details, .hotel-details {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7); 
+    backdrop-filter: blur(1px);
+    color: #333;
+    text-align: center;
+    padding: 20px 0;
+    border-radius: 0 0 15px 15px; 
+    transform: translateY(100%); 
+    opacity: 0; 
+    transition: all 0.3s ease; 
+    animation: slideUp 0.3s ease forwards; 
+  }
+  
+
+  .place, .restaurant, .hotel {
+    position: relative; 
+    overflow: hidden; 
+  }

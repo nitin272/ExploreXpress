@@ -11,12 +11,36 @@ router.use(cors());
 
 router.post("/auth/signup", async (req, res) => {
   const { name, email, password } = req.body;
+
+  if (!email || !name || !password) {
+    return res.status(400).json({ message: "Please fill in all fields" });
+  }
+
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
+
   try {
+
+    const existingUserByEmail = await User.findOne({ email });
+    if (existingUserByEmail) {
+      return res.status(409).json({ message: "Email already registered with another account" });
+    }
+
+
+    const existingUserByUsername = await User.findOne({ username: name });
+    if (existingUserByUsername) {
+      return res.status(409).json({ message: "Username already exists" });
+    }
+
     const newUser = await User.create({
       username: name,
       email,
       password,
     });
+
     res.status(201).json({ message: "User created successfully", userId: newUser._id });
   } catch (error) {
     console.error(error);
@@ -32,7 +56,7 @@ router.post("/auth/login", async (req, res) => {
       const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
       res.json({ message: "Login successful", token, userId: user._id }); 
     } else {
-      res.status(401).json({ message: "Invalid credentials" });
+      res.status(401).json({ message: "Invalid password or email" });
     }
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });
@@ -54,7 +78,7 @@ router.get('/user/:userId', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+ 
     res.json({name: user.username, ...user.toObject()});
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -83,6 +107,7 @@ router.post('/verify-password', async (req, res) => {
     res.status(500).json({ message: "Error verifying password", error: error.message });
   }
 });
+
 
 router.put('/user/:userId', async (req, res) => {
   const { userId } = req.params;

@@ -1,0 +1,25 @@
+.footer-main {
+  background-color: hsl(222, 46%, 17%);
+  color: #fff;
+  padding: 20px 0; /* Adjusted padding for all screen sizes */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../../assets/images/footer-bg.png);
+  background-size: cover;
+  background-position: center;
+  text-align: center; /* Ensured all text is centered for all screen sizes */
+}
+
+.hr-footer {
+  border: none;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 80%;
+  margin: 20px auto;
+}
+
+.footer-logo {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+}

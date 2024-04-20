@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './Form.css';
+import './Form.css'; // Ensure this is the updated CSS file
 
 const AuthForm = () => {
   const [isActive, setIsActive] = useState(false);
@@ -31,32 +31,31 @@ const AuthForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `https://explore-xpress.onrender.com/auth/google/callback`;
+    window.location.href = `${apiUrl}/auth/google/callback`;
   };
-  
 
   return (
-    <div className={`container ${isActive ? 'active' : ''}`} id="container">
+    <div className={`auth-container ${isActive ? 'active' : ''}`} id="container">
       {isActive ? (
-        <form onSubmit={handleSubmit} className="form-container sign-up">
+        <form onSubmit={handleSubmit} className="auth-form-container sign-up">
           <h1>Sign Up</h1>
           <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit">Sign Up</button>
-          <div className="social-login">
-            <button type="button" className="google" onClick={handleGoogleSignIn}>Continue with Google</button>
+          <div className="auth-social-login">
+            <button type="button" className="auth-google" onClick={handleGoogleSignIn}>Continue with Google</button>
           </div>
           <p>Already have an account? <button type="button" onClick={() => setIsActive(false)}>Login</button></p>
         </form>
       ) : (
-        <form onSubmit={handleSubmit} className="form-container sign-in">
+        <form onSubmit={handleSubmit} className="auth-form-container sign-in">
           <h1>Sign In</h1>
           <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           <button type="submit">Sign In</button>
-          <div className="social-login">
-            <button type="button" className="google" onClick={handleGoogleSignIn}>Continue with Google</button>
+          <div className="auth-social-login">
+            <button type="button" className="auth-google" onClick={handleGoogleSignIn}>Continue with Google</button>
           </div>
           <p>Don't have an account? <button type="button" onClick={() => setIsActive(true)}>Sign Up</button></p>
         </form>
