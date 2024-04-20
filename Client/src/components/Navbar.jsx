@@ -22,7 +22,7 @@ const Navbar = () => {
       if (!userId) return;
 
       try {
-        const response = await fetch(`https://explore-xpress.onrender.com/user/${userId}`, {
+        const response = await fetch(`http://localhost:4000/user/${userId}`, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const Navbar = () => {
         </h3>
         <ul className="new-navbar-options">
           <li><Link to="/" style={{color: 'black'}}><FontAwesomeIcon icon={faHome} style={{ fontSize: '30px', color: 'grey' }}/> Home</Link></li>
-          <li><FontAwesomeIcon icon={faUsers} style={{ fontSize: '30px', color: 'skyblue' }}/> About Us</li>
+          <li><Link to="/About"><FontAwesomeIcon icon={faUsers} style={{ fontSize: '30px', color: 'skyblue' }}/> About Us</Link></li>
           <li><FontAwesomeIcon icon={faStar} style={{ fontSize: '30px', color: 'yellow' }}/> Review</li>
           <li><FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '30px', color: 'green' }}/> Contact</li>
           <li><FontAwesomeIcon icon={faCalendarAlt} style={{ fontSize: '30px', color: 'blue' }}/> My Plans</li>

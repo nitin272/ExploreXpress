@@ -1,17 +1,13 @@
 body, html {
   margin: 0;
   padding: 0;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   background-color: #f0f0f0;
   height: 100vh;
+  position: relative;
 }
 
-.navbar {
-  background-color: #333;
-  color: #fdfdfd;
-  padding: 1rem;
-  text-align: center;
-}
+
 
 .profile-container {
   padding: 0;
@@ -19,7 +15,7 @@ body, html {
 }
 
 .profileDev {
-  background-color: #333;
+  background: brown
 }
 
 .profile-heading {
@@ -51,13 +47,14 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 10vh;
 }
 
 .NameInput, .EmailInput, .AgeE {
   height: 8vh;
   width: 55vh;
   margin: 2vh;
-  border: 2px solid #333;
+  border: 2px solid #090606;
   font-size: 30px;
   text-align: center;
   border-radius: 10px;
@@ -65,7 +62,7 @@ body, html {
   color: #333;
 }
 
-.EditBtn, .LogoutBtn, .HomeBtn {
+.LogoutBtn, .HomeBtn {
   height: 10vh;
   width: 35vh;
   margin: 2vh;
@@ -77,26 +74,51 @@ body, html {
   transition: background-color 0.3s;
 }
 
-.EditBtn {
-  background-color: rgb(132, 231, 125);
-  color: #333;
-}
 
 .LogoutBtn, .HomeBtn {
   background-color: #333;
   color: #f0f0f0;
 }
 
-.EditBtn:hover, .LogoutBtn:hover, .HomeBtn:hover {
-  background-color: #555;
-  color: #fff;
-}
 
 .error-message {
   color: #e63946;
   font-weight: bold;
   margin-top: 1rem;
 }
+
+
+.EditButtton,.save {
+  background-color: rgb(132, 231, 125);
+  color: #333;
+  position: absolute;
+  top: 75vh;
+  left: 102vh;
+  height: 12vh;
+  width: 25vh;
+  margin: 2vh;
+  border: 2px solid #333;
+  font-size: 5vh;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+  .HomeButon {
+    position: absolute;
+    top: 75vh; 
+    right: 38vh;
+    height: 12vh;
+    width: 25vh;
+    margin: 2vh;
+    border: 2px solid #333;
+    font-size: 5vh; 
+    border-radius: 10px;
+    background-color: #4cb2de;
+    color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
 
 .no-user {
   margin-top: 20vh;
@@ -106,17 +128,114 @@ body, html {
 
 @media (max-width: 768px) {
   .profile-heading {
-      font-size: 6vh;
+      font-size: 4vh;
   }
 
   .profileImg {
-      width: 40vh;
-      height: 40vh;
+      width: 25vh;
+      height: 25vh;
   }
 
-  .NameInput, .EmailInput, .AgeE, .EditBtn, .LogoutBtn, .HomeBtn {
-      width: 80%;
+  .AgeE, .LogoutBtn {
+      width: 7vh;
       height: 7vh;
       font-size: 4vh;
   }
+  .EmailInput{
+    margin-right: 20px;
+    font-size: 3vh;
+    width: 90%;
+  }
+  .NameInput{
+    margin-right: 20px;
+    font-size: 3vh;
+    width: 70%;
+  }
+  .EditButtton,.save {
+    background-color: rgb(132, 231, 125);
+    color: #333;
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    height: 7vh;
+    width: 14vh;
+    margin: 2vh;
+    border: 2px solid #333;
+    font-size: 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+    .HomeButon {
+      position: absolute;
+      top: 20vh; 
+      right: 0;
+      height: 7vh;
+      width: 12vh;
+      margin: 2vh;
+      border: 2px solid #333;
+      font-size: 25px; 
+      border-radius: 10px;
+      background-color: #4cb2de;
+      color: #f0f0f0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+}
+
+@media (max-width: 300px) {
+  .profile-heading {
+      font-size: 4vh;
+  }
+
+  .profileImg {
+      width: 50%;
+      height: 20vh;
+  }
+
+  .EmailInput{
+    font-size: 2.5vh;
+    width: 110%;
+  }
+  .NameInput{
+    margin-right: 20px;
+    font-size: vh;
+    width: 70%;
+  }
+  .EditButtton,.save {
+    background-color: rgb(132, 231, 125);
+    color: #333;
+    position: absolute;
+    top: 20vh;
+    left: -10px;
+    height: 5vh;
+    width: 10vh;
+    margin: 2vh;
+    border: 2px solid #333;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+    .HomeButon {
+      position: absolute;
+      top: 20vh; 
+      right: -10px;
+      height: 5vh;
+      width: 10vh;
+      margin: 2vh;
+      border: 2px solid #333;
+      font-size: 15px; 
+      border-radius: 10px;
+      background-color:#4cb2de;
+      color: #f0f0f0;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .profileInfo {
+      font-size: 4vh
+    }
 }

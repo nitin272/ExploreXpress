@@ -1,0 +1,78 @@
+/* Base styles */
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.about-content {
+  flex-basis: 60%;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.about-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.about-item {
+  margin-bottom: 20px;
+}
+
+.about-item h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.about-item p {
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.about-banner {
+  flex-basis: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.about-banner img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .about-content, .about-banner {
+      flex-basis: 100%;
+  }
+
+  .about-banner img {
+      max-width: 90%;
+   
+  }
+}
