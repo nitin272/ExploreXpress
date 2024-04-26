@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../Models/Login");
 const cors = require("cors");
-
+const userdb = require("../Models/Google");
 const router = express.Router();
 const secretKey = "Nitin";
 
@@ -11,7 +11,7 @@ router.use(cors());
 
 router.post("/auth/signup", async (req, res) => {
   const { name, email, password } = req.body;
-
+  // console.log(req.body);
   if (!email || !name || !password) {
     return res.status(400).json({ message: "Please fill in all fields" });
   }
@@ -62,15 +62,26 @@ router.post("/auth/login", async (req, res) => {
     res.status(500).json({ message: "Error logging in", error: error.message });
   }
 });
+
+
 router.get('/users', async (req, res) => {
   try {
-    const users = await User.find({}).select('-password'); 
-    res.json(users);
+    const usersFromFirstDB = await User.find({}).select('-password');
+    const usersFromSecondDB = await userdb.find({}).select('-password');
+
+
+    // Combine both user lists into one array (or you can structure this however you prefer)
+    const combinedUsers = usersFromFirstDB.concat(usersFromSecondDB);
+
+    res.json(combinedUsers);
   } catch (error) {
     console.error("Error fetching users:", error);
     res.status(500).json({ message: "Error fetching users", error: error.message });
   }
 });
+
+
+
 router.get('/user/:userId', async (req, res) => {
   const { userId } = req.params;
   try {

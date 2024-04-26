@@ -1,3 +1,5 @@
+
+
 body, html {
   margin: 0;
   padding: 0;
@@ -10,6 +12,7 @@ body, html {
 
 
 .profile-container {
+  margin-top: 11vh;
   padding: 0;
   text-align: center;
 }
@@ -155,10 +158,10 @@ body, html {
     background-color: rgb(132, 231, 125);
     color: #333;
     position: absolute;
-    top: 20vh;
+    top: 55%;
     left: 0;
     height: 7vh;
-    width: 14vh;
+    width: 45%;
     margin: 2vh;
     border: 2px solid #333;
     font-size: 25px;
@@ -169,10 +172,10 @@ body, html {
 
     .HomeButon {
       position: absolute;
-      top: 20vh; 
+      top:55%; 
       right: 0;
       height: 7vh;
-      width: 12vh;
+      width: 45%;
       margin: 2vh;
       border: 2px solid #333;
       font-size: 25px; 
@@ -181,6 +184,9 @@ body, html {
       color: #f0f0f0;
       cursor: pointer;
       transition: background-color 0.3s;
+    }
+    .profileInfo {
+      font-size: 3vh
     }
 
 }
@@ -197,7 +203,7 @@ body, html {
 
   .EmailInput{
     font-size: 2.5vh;
-    width: 110%;
+    width: 100%;
   }
   .NameInput{
     margin-right: 20px;
@@ -208,13 +214,13 @@ body, html {
     background-color: rgb(132, 231, 125);
     color: #333;
     position: absolute;
-    top: 20vh;
-    left: -10px;
-    height: 5vh;
-    width: 10vh;
+    top: 60vh;
+    left:10%;
+    height: 8vh;
+    width: 75%;
     margin: 2vh;
     border: 2px solid #333;
-    font-size: 15px;
+    font-size:20px;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -222,13 +228,13 @@ body, html {
 
     .HomeButon {
       position: absolute;
-      top: 20vh; 
-      right: -10px;
-      height: 5vh;
-      width: 10vh;
+      top: 50vh; 
+      right: 5%;
+      height: 8vh;
+      width: 75%;
       margin: 2vh;
       border: 2px solid #333;
-      font-size: 15px; 
+      font-size:20px; 
       border-radius: 10px;
       background-color:#4cb2de;
       color: #f0f0f0;
@@ -238,4 +244,14 @@ body, html {
     .profileInfo {
       font-size: 4vh
     }
+}
+/* Account.css */
+.hidden {
+  display: none;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
 }

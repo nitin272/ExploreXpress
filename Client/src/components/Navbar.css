@@ -14,13 +14,19 @@ body, html {
     animation: fadeIn ease 0.5s;
     animation-fill-mode: forwards;
 }
-
 .header {
+    overflow: hidden;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
     transition: all 0.3s ease;
+    z-index: 1000; 
+    background-color: var(--background-light); 
 }
 
 .logo-text {
@@ -76,6 +82,9 @@ body, html {
         background-color: #0056b3;
         transform: scale(0.98);
     }
+
+
+    
 }
 
 .new-navbar {
@@ -136,6 +145,7 @@ body, html {
     display: flex;
     align-items: center;
     gap: 10px;
+    height: fit-content;
     border-bottom: 1px solid var(--shadow-color);
     transition: all 0.3s ease, transform 0.5s ease;
     transform: translateX(-20px);
@@ -195,20 +205,37 @@ body, html {
 }
 
 
-
 .user-info {
     background-color: #90f9ff36;
     color: #333;
     padding: 20px;
     border-bottom: 2px solid #f07575;
     text-align: center;
-  }
-  
-  .user-info h4 {
+}
+
+.user-info h4 {
     margin: 0;
-    font-size: 35px;
+    font-size: 35px; 
     color: var(--primary-color);
     font-weight: 600;
-  }
-  
+}
+
+@media (max-width: 768px) {
+    .user-info h4 {
+        font-size: 28px;
+    }
+    .user-info {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-info h4 {
+        font-size: 25px;
+    }
+    .user-info {
+        padding: 10px;
+    }
+}
+
 

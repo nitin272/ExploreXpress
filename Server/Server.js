@@ -10,7 +10,7 @@ const secretKey = "Nitin";
 const path = require('path');
 
 // Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use(express.json());
 app.use(cors());
 
@@ -22,7 +22,7 @@ const Restaurant = require('./routes/Restaurent')
 const Places = require('./routes/Places')
 
 
-
+app.use(google)
 
   app.use(Places)
   app.use(Restaurant)
