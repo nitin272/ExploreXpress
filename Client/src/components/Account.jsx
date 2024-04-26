@@ -5,6 +5,7 @@ import LoadingSpinner from './Load';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import './Account.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const Account = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -13,99 +14,94 @@ const Account = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const authType = localStorage.getItem('authType');
+        if (!authType) {
+            navigate('/login');
+            return;
+        }
+
         const fetchUserData = async () => {
-            const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
-            const { userId, token } = storedUserData.user || storedUserData;
-            if (!userId) {
-                navigate('/login');
-                return;
-            }
-            try {
-                const response = await fetch(`http://localhost:4000/user/${userId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch user data');
+            if (authType === 'manual') {
+                const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+                const { userId, token } = storedUserData.user || storedUserData;
+                if (!userId) {
+                    navigate('/login');
+                    return;
                 }
-                const data = await response.json();
-                setUserData(data);
-                setLoading(false);
-            } catch (error) {
-                setError(error.message || 'Failed to fetch user data');
+                try {
+                    const response = await fetch(`http://localhost:4000/user/${userId}`, {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch user data');
+                    }
+                    const data = await response.json();
+                    setUserData(data);
+                    setLoading(false);
+                } catch (error) {
+                    setError(error.message || 'Failed to fetch user data');
+                    setLoading(false);
+                }
+            } else if (authType === 'google') {
+                const user = JSON.parse(localStorage.getItem('user'));
+                setUserData({
+                    name: user.displayName,
+                    email: user.email,
+                    imageUrl: user.image,
+                });
                 setLoading(false);
             }
         };
+
         fetchUserData();
     }, [navigate]);
 
     const handleLogout = () => {
         localStorage.removeItem('user');
+        localStorage.removeItem('authType');
         navigate('/login');
     };
 
-    const toggleEdit = async () => {
-        const password = prompt("Please enter your password to continue:");
-        if (!password) {
-            alert("Password is required to edit your details.");
-            return;
-        }
-        const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
-        const { userId, token } = storedUserData.user || storedUserData;
-
-        try {
-            const response = await fetch('http://localhost:4000/verify-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({ userId, password }),
-            });
-
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.message || 'Failed to verify password');
-            }
-
+    const toggleEdit = () => {
+        const authType = localStorage.getItem('authType');
+        if (authType === 'manual') {
             setIsEditing(true);
-        } catch (error) {
-            alert(error.message || "An error occurred. Please try again.");
         }
     };
 
     const handleSubmitEdit = async (e) => {
         e.preventDefault();
-        const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
-        const { userId, token } = storedUserData.user || storedUserData;
+        const authType = localStorage.getItem('authType');
+        if (authType === 'manual') {
+            const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+            const { userId, token } = storedUserData.user || storedUserData;
 
-        const name = e.target.elements.name.value;
-        const email = e.target.elements.email.value;
+            const name = e.target.elements.name.value;
+            const email = e.target.elements.email.value;
 
-        try {
-            const response = await fetch(`http://localhost:4000/user/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
-                body: JSON.stringify({ name, email }),
-            });
+            try {
+                const response = await fetch(`http://localhost:4000/user/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ name, email }),
+                });
 
-            if (!response.ok) {
-                throw new Error('Failed to update user data');
+                if (!response.ok) {
+                    throw new Error('Failed to update user data');
+                }
+                const responseData = await response.json();
+                setUserData(responseData.user);
+                setIsEditing(false);
+            } catch (error) {
+                alert('Failed to update user data. Please try again later.');
             }
-            const responseData = await response.json(); // Get the full response JSON
-            if (!responseData.user) {
-                throw new Error('User data missing in response');
-            }
-            setUserData(responseData.user); // Correctly access the user object
-            setIsEditing(false);
-        } catch (error) {
-            alert('Failed to update user data. Please try again later.');
         }
     };
 
@@ -139,7 +135,7 @@ const Account = () => {
                     <>
                         <div className='profileImg' style={{ backgroundImage: `url(${userData.imageUrl || 'defaultProfileImageUrl'})` }}></div>
                         <div className='profileInfo'>
-                            {isEditing ? (
+                            {isEditing && localStorage.getItem('authType') === 'manual' ? (
                                 <>
                                     <form onSubmit={handleSubmitEdit}>
                                         <input type="text" name="name" className='NameInput' defaultValue={userData.name} placeholder="Name"/>
@@ -151,9 +147,13 @@ const Account = () => {
                                 <>
                                     <div className='NameInput2'>{userData.name}</div>
                                     <div className='EmailInput'>{userData.email}</div>
-                                    <button className='EditButtton' onClick={toggleEdit}>
-                                    Edit <FontAwesomeIcon icon={faEdit} />
-    </button>
+                                    {localStorage.getItem('authType') === 'manual' ? (
+                                        <button className='EditButtton' onClick={toggleEdit}>
+                                            Edit <FontAwesomeIcon icon={faEdit} />
+                                        </button>
+                                    ) : (
+                                        <button className='EditButtton hidden'>Edit</button>
+                                    )}
                                 </>
                             )}
                         </div>
@@ -162,8 +162,7 @@ const Account = () => {
                     <div className="no-user">Please log in to view your account.</div>
                 )}
             </div>
-            <div>
-        
+            <div className="center">
                 <button className="HomeButon" onClick={() => navigate('/')}>Home</button>
             </div>
         </div>

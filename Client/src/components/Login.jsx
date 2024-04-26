@@ -10,14 +10,16 @@ const AuthForm = () => {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  const apiUrl = "https://explore-xpress.onrender.com";
+  const apiUrl = "http://localhost:4000";
 
   const handleAuth = async (isSignUp, userData) => {
     try {
       const endpoint = isSignUp ? `${apiUrl}/auth/signup` : `${apiUrl}/auth/login`;
       const response = await axios.post(endpoint, userData);
       const { token, userId, email, imageUrl } = response.data;
-      localStorage.setItem('user', JSON.stringify({ token, userId, email, imageUrl, name: name || email }));
+      localStorage.setItem('authType', 'manual');
+      localStorage.setItem('user', JSON.stringify({ token, userId, email, imageUrl, name: name || email} ))
+
       navigate('/');
     } catch (error) {
       console.error('Error:', error.response ? error.response.data.message : error.message);
@@ -32,6 +34,7 @@ const AuthForm = () => {
 
   const handleGoogleSignIn = () => {
     window.location.href = `${apiUrl}/auth/google/callback`;
+    localStorage.setItem('authType', 'google');
   };
 
   return (

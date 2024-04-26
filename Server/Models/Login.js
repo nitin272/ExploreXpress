@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   username: { 
     type: String, 
     required: [true, 'Username is required'], 
-    unique: true,
+
     minlength: [3, 'Username must be at least 3 characters long'], 
     maxlength: [30, 'Username must be less than 30 characters'],
     validate: {
@@ -45,5 +45,5 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-const User = mongoose.model('user', userSchema, 'Login');
+const User = mongoose.model('user', userSchema, 'Manual');
 module.exports = User;

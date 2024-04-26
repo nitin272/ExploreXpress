@@ -13,7 +13,7 @@ body, html {
     font-family: Arial, sans-serif;
 }
 
-/* Naviagtion options and image and heading */
+
 .heading{
   font-size: 6vh;
   color: rgba(33, 166, 255, 0.677);
@@ -21,6 +21,7 @@ body, html {
 }
 
 .home-container {
+  margin-top: 11vh;
     display: flex;
     position: relative;
     flex-direction: column;
