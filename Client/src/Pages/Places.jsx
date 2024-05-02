@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
-
+import Footer from '../components/Footer';
 const FamousPlaces = () => {
   const [places, setPlaces] = useState([]);
-
+  const apiurl = "http://localhost:4000"
   useEffect(() => {
-    axios.get('http://localhost:4000/places') 
+    axios.get(`${apiurl}/places`) 
       .then(response => {
         setPlaces(response.data);
       })
@@ -34,6 +34,7 @@ const FamousPlaces = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

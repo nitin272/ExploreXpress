@@ -1,6 +1,5 @@
-import React,{useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import "./Hero.css"
 import Navbar from '../../components/Navbar'; 
 import Loading from '../../components/Load';
 
@@ -8,38 +7,40 @@ import shape1 from '../../assets/images/shape-1.png';
 import shape2 from '../../assets/images/shape-2.png';
 import shape3 from '../../assets/images/shape-3.png';
 import heroBanner from '../../assets/images/hero-banner.png';
+import "./Hero.css"; // Import custom CSS for animations
 
 const Hero = () => {
-    return(
+    return (
+        <div className="container mx-auto relative">
 
+            <img src={shape1} alt="Vector Shape" className="hidden md:block absolute top-10 left-10 animate-spin-slow" width="61" height="61" />
+            <img src={shape2} alt="Vector Shape" className="hidden md:block absolute top-1/4 right-10 animate-spin-slow animation-delay-100" width="56" height="74" />
+            <img src={shape3} alt="Vector Shape" className="hidden md:block absolute bottom-10 left-1/3 animate-spin-slow animation-delay-200" width="57" height="72" />
 
-<div className="container">
+            <div className="text-center p-6 md:text-left md:flex md:items-center md:justify-between">
+                <div>
+                    <p className="text-3xl text-yellow-400 font-bold tracking-wide mb-4 shadow-lg">
+                        Explore Your Travel
+                    </p>
+                    <h2 className="text-4xl md:text-5xl text-blue-800 font-bold leading-tight mb-5">
+                        Trusted Travel Agency
+                    </h2>
+                    <p className="text-gray-600 text-xl mb-5">
+                        I travel not to go anywhere, but to go. I travel for travel's sake. The great affair is to move.
+                    </p>
+                    <div className="flex justify-center md:justify-start gap-4 flex-wrap">
+                        <Link to="/about" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Contact Us
+                        </Link>
+                    </div>
+                </div>
 
-<img src={shape1} width="61" height="61" alt="Vector Shape" className="shape shape-1" />
-<img src={shape2} width="56" height="74" alt="Vector Shape" className="shape shape-2" />
-<img src={shape3} width="57" height="72" alt="Vector Shape" className="shape shape-3" />
+                <figure className="w-full md:max-w-md">
+                    <img src={heroBanner} alt="Hero Banner" className="w-full" loading="lazy" />
+                </figure>
+            </div>
+        </div>
+    );
+};
 
-<div className="hero-content">
-  <p className="section-subtitle">Explore Your Travel</p>
-  <h2 className="hero-title">Trusted Travel Agency</h2>
-  <p className="hero-text">
-    I travel not to go anywhere, but to go. I travel for travel's sake the great affair is to move.
-  </p>
-  <div className="btn-group">
-    
-    <Link to="/about" className="btn btn-primary">Contact Us</Link>
-
-  </div>
-</div>
-
-<figure className="hero-banner">
-  <img src={heroBanner} width="686" height="812" loading="lazy" alt="hero banner" className="w-100" />
-</figure>
-
-</div>
-
-
-    )
-}
-
-export default Hero 
+export default Hero;

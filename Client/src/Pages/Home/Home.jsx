@@ -14,7 +14,7 @@ import heroBanner from '../../assets/images/hero-banner.png';
 import heroBgBottom from '../../assets/images/hero-bg-bottom.png';
 import heroBgTop from '../../assets/images/hero-bg-top.png';
 import MidHome from './midHome';
-import Footer from './Footer';
+import Footer from '../../components/Footer';
 import Hero from './Hero';
 import About from './About';
 const Home = () => {

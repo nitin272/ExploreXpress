@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const tableSchema = new Schema({
-    tableID: String,
-    seatingCapacity: Number,
-    availability: Boolean
-});
 
 const restaurantSchema = new Schema({
     id: String,
@@ -14,7 +9,9 @@ const restaurantSchema = new Schema({
     rating: String,
     address: String,
     coordinates: String,
-    tables: [tableSchema]
+    Range: String,
+    cuisine: String,
+
 }, { timestamps: true, collection: 'Restaurent' });
 
 const Restaurant = mongoose.model('Restaurent', restaurantSchema);

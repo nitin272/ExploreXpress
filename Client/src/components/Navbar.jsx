@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios'; // Make sure to import axios
-import './Navbar.css';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCompass, faBars, faHome, faUsers, faStar, faEnvelope,
@@ -12,7 +11,7 @@ const Navbar = () => {
   const [newNavBar, setNewNavBar] = useState(false);
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
-
+  const apiurl = `http://localhost:4000`;
   const isLoggedIn = () => localStorage.getItem('authType') !== null;
 
   useEffect(() => {
@@ -22,7 +21,7 @@ const Navbar = () => {
         console.log('No auth type found, aborting fetch operation.');
         return;
       }
-  
+
       if (authType === 'manual') {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         const { userId, token } = user;
@@ -30,7 +29,7 @@ const Navbar = () => {
           console.log('No userId found, aborting fetch operation.');
           return;
         }
-        const url = `http://localhost:4000/user/${userId}`;
+        const url = `${apiurl}/user/${userId}`;
         try {
           const response = await axios.get(url, {
             headers: {
@@ -38,15 +37,13 @@ const Navbar = () => {
               'Content-Type': 'application/json'
             }
           });
-          console.log('HTTP Response:', response);
           setUserName(response.data.name);
         } catch (error) {
           console.error('Error during fetch:', error);
         }
       } else if (authType === 'google') {
         try {
-          const response = await axios.get('http://localhost:4000/login/sucess', { withCredentials: true });
-          console.log('Google user response:', response);
+          const response = await axios.get(`${apiurl}/login/success`, { withCredentials: true });
           if (response.data && response.data.user) {
             localStorage.setItem('user', JSON.stringify(response.data.user));
             setUserName(response.data.user.displayName);
@@ -58,57 +55,77 @@ const Navbar = () => {
         }
       }
     };
-  
+
     if (isLoggedIn()) {
       fetchUserName();
     }
-  }, []); // This effect runs once on mount
-  
+  }, []);
+
   const handleLogout = () => {
-    console.log('Logging out, clearing local storage...');
-  
     localStorage.clear();
     navigate('/login');
   };
 
-  return (
-    <header className="header">
-      <h2 className='menu'>
-        <FontAwesomeIcon icon={faBars} onClick={() => setNewNavBar(!newNavBar)} />
-      </h2>
-      <h1 className="logo-text">
-        <FontAwesomeIcon icon={faCompass} /> ExploreXpress
-      </h1>
-      
-      <div className={newNavBar ? "new-navbar active" : "new-navbar"}>
-        {isLoggedIn() && (
-          <div className="user-info">
-            <h4>Welcome, {userName}</h4> 
-          </div>
+return (
+  <header className="fixed top-0 left-0 w-full flex items-center justify-between px-5 py-3 bg-white shadow-lg z-50">
+    <h2 className='text-4xl cursor-pointer'>
+      <FontAwesomeIcon icon={faBars} onClick={() => setNewNavBar(!newNavBar)} />
+    </h2>
+    <h1 className="text-3xl font-bold flex items-center text-blue-700 gap-2 hover:scale-105 hover:-rotate-3 transition-transform duration-300">
+      <FontAwesomeIcon icon={faCompass} /> ExploreXpress
+    </h1>
+
+    <div className={`${newNavBar ? "translate-x-0 ease-out" : "-translate-x-full ease-in"} fixed top-0 left-0 w-2/3 max-w-sm h-full bg-blue-200 backdrop-blur-lg transition-transform duration-500 z-20 pt-20 shadow-xl`}>
+      {isLoggedIn() && (
+        <div className="bg-gradient-to-r from-blue-200 to-blue-300 bg-opacity-60 text-gray-900 py-5 border-b-8 border-blue-400 text-center shadow-lg transform transition duration-500 hover:scale-105 hover:bg-opacity-80">
+        <h4 className="text-2xl font-semibold animate-pulse">Welcome, {userName}</h4>
+    </div>
+    
+      )}
+      <h3 className='text-6xl text-red-600 absolute top-4 right-4 cursor-pointer hover:rotate-90 transition duration-300'>
+        <FontAwesomeIcon icon={faTimes} onClick={() => setNewNavBar(!newNavBar)} />
+      </h3>
+      <ul className="list-none p-0 m-0 text-gray-900">
+        <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-blue-700 hover:text-white cursor-pointer transition-all duration-300">
+          <Link to="/" className="flex items-center gap-2">
+            <FontAwesomeIcon icon={faHome} className="text-3xl text-gray-500"/> Home
+          </Link>
+        </li>
+        <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-blue-600 hover:text-white cursor-pointer transition-all duration-300">
+          <Link to="/About" className="flex items-center gap-2">
+            <FontAwesomeIcon icon={faUsers} className="text-3xl text-sky-500"/> About Us
+          </Link>
+        </li>
+
+        <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-green-600 hover:text-white cursor-pointer transition-all duration-300">
+          <FontAwesomeIcon icon={faEnvelope} className="text-3xl text-green-600"/> Contact
+        </li>
+        <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-blue-500 hover:text-white cursor-pointer transition-all duration-300">
+          <FontAwesomeIcon icon={faCalendarAlt} className="text-3xl text-blue-500"/> My Plans
+        </li>
+        {isLoggedIn() ? (
+          <>
+            <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-purple-600 hover:text-white cursor-pointer transition-all duration-300">
+              <Link to="/account" className="flex items-center gap-2">
+                <FontAwesomeIcon icon={faUserCircle} className="text-3xl"/> My Account
+              </Link>
+            </li>
+            <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-red-600 hover:text-white cursor-pointer transition-all duration-300" onClick={handleLogout}>
+              <FontAwesomeIcon icon={faSignOutAlt} className="text-3xl text-red-600"/> Logout
+            </li>
+          </>
+        ) : (
+          <li className="px-6 py-4 text-xl flex items-center gap-3 border-b border-gray-400 hover:bg-blue-600 hover:text-white cursor-pointer transition-all duration-300">
+            <Link to="/login" className="block w-full">
+              <div className='block w-auto px-6 py-3 text-lg m-auto text-gray-800 bg-blue-700 rounded-md font-medium cursor-pointer hover:bg-blue-800 transition-colors duration-300'>Login</div>
+            </Link>
+          </li>
         )}
-        <h3 className='cross'>
-          <FontAwesomeIcon icon={faTimes} onClick={() => setNewNavBar(!newNavBar)} />
-        </h3>
-        <ul className="new-navbar-options">
-          <li><Link to="/" style={{ color: 'black' }}><FontAwesomeIcon icon={faHome} style={{ fontSize: '30px', color: 'grey' }}/> Home</Link></li>
-          <li><Link to="/About"><FontAwesomeIcon icon={faUsers} style={{ fontSize: '30px', color: 'skyblue' }}/> About Us</Link></li>
-          <li><FontAwesomeIcon icon={faStar} style={{ fontSize: '30px', color: 'yellow' }}/> Review</li>
-          <li><FontAwesomeIcon icon={faEnvelope} style={{ fontSize: '30px', color: 'green' }}/> Contact</li>
-          <li><FontAwesomeIcon icon={faCalendarAlt} style={{ fontSize: '30px', color: 'blue' }}/> My Plans</li>
-          {isLoggedIn() ? (
-            <>
-              <li><Link to="/account" style={{ color: 'purple' }}><FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '30px' }}/> My Account</Link></li>
-              <li onClick={handleLogout} style={{ cursor: 'pointer', color: 'red' }}>
-                <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '30px' }}/> Logout
-              </li>
-            </>
-          ) : (
-            <li><Link to="/login" className='Login'>Login</Link></li>
-          )}
-        </ul>
-      </div>
-    </header>
-  );
+      </ul>
+    </div>
+  </header>
+);
+
 };
 
 export default Navbar;
