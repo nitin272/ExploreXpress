@@ -1,18 +1,11 @@
-
 const express = require('express');
-const mongoose = require('mongoose');
-const Restaurant = require('../Models/Restaurent');
-const app = express();
+const router = express.Router();
+const RestaurantController = require('../controller/Restaurant.controller');
 
-app.get('/restaurants', async (req, res, next) => {
-    try {
-        const restaurants = await Restaurant.find({});
-        res.json(restaurants);
-    } catch (error) {
-        next(error); 
-    }
-});
+router.get('/restaurants', RestaurantController.getAllRestaurants);
+router.get('/restaurants/:id', RestaurantController.getRestaurantById);
+router.post('/restaurants', RestaurantController.createRestaurant);
+router.put('/restaurants/:id', RestaurantController.updateRestaurant);
+router.delete('/restaurants/:id', RestaurantController.deleteRestaurant);
 
-
-
-module.exports = app;
+module.exports = router;

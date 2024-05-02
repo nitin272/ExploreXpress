@@ -8,14 +8,14 @@ const MidHome = () => {
     const [places, setPlaces] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const apiurl = "http://localhost:4000"
     useEffect(() => {
         const fetchData = async () => {
           try {
             const responses = await Promise.all([
-              fetch('http://localhost:4000/hotels'),
-              fetch('http://localhost:4000/restaurants'),
-              fetch('http://localhost:4000/places')
+              fetch(`${apiurl}/hotels`),
+              fetch(`${apiurl}/restaurants`),
+              fetch(`${apiurl}/places`)
             ]);
             const data = await Promise.all(responses.map(response => response.json()));
     

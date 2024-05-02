@@ -1,15 +1,12 @@
 const express = require('express');
-const app = express();
-const Places = require('../Models/Places');
+const router = express.Router();
+const PlacesController = require('../controller/PlaceController');
 
-app.get('/places', async (req, res, next) => {
-    try {
-        const places = await Places.find({}); // This line is problematic
-        res.json(places);
-    } catch (error) {
-        next(error);
-    }
-});
+// Routes for handling places
+router.get('/places', PlacesController.getAllPlaces);
+router.get('/places/:id', PlacesController.getPlaceById);
+router.post('/places', PlacesController.createPlace);
+router.put('/places/:id', PlacesController.updatePlace);
+router.delete('/places/:id', PlacesController.deletePlace);
 
-
-module.exports = app;
+module.exports = router;

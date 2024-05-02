@@ -13,10 +13,12 @@ const clientsecret = process.env.CLIENT_SECRET
 
 
 app.use(cors({
-    origin:"http://localhost:4500",
-    methods:"GET,POST,PUT,DELETE",
-    credentials:true
+    origin: 'http://localhost:4500', // Allows all domains to access your server
+    methods: "GET, POST, PUT, DELETE",
+    
+    credentials: true // Be cautious with this setting when allowing all origins
 }));
+
 app.use(express.json());
 
 // setup session
@@ -83,7 +85,7 @@ app.get("/auth/google/callback",passport.authenticate("google",{
     failureRedirect:"http://localhost:4500/login"
 }))
 
-app.get("/login/sucess",async(req,res)=>{
+app.get("/login/success",async(req,res)=>{
 
     if(req.user){
         res.status(200).json({message:"user Login",user:req.user})
@@ -116,6 +118,22 @@ app.get("/logout",(req,res,next)=>{
     }
   });
 
+
+app.post('/addHotel/:userId', async (req, res) => {
+    const { userId } = req.params;
+    const { hotelId } = req.body;
+
+    try {
+        // Find the user and update their hotels array
+        const user = await User.findByIdAndUpdate(userId, {
+            $addToSet: { Hotel: hotelId }  // $addToSet prevents duplicates
+        }, { new: true }).populate('Hotel');
+
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
 
 module.exports = app

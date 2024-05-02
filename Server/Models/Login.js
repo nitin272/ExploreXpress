@@ -32,6 +32,20 @@ const userSchema = new mongoose.Schema({
     }
   },
   imageUrl: String,
+
+  Hotel: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Hotel'
+  }],
+  Places: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Place'
+  }],
+  Restaurant: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Restaurant'
+  }]
+  
 });
 
 userSchema.pre('save', async function (next) {

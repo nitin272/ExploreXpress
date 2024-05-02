@@ -16,7 +16,6 @@ const hotelSchema = new Schema({
     features: [String],
     address: String,
     coordinates: String,
-    rooms: [roomSchema]
 }, { timestamps: true, collection: 'Hotel' });
 
 const Hotel = mongoose.model('Hotel', hotelSchema);

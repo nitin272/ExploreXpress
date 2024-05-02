@@ -1,17 +1,14 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const Hotel = require('../Models/Hotel'); 
-const app = express();
+const router = express.Router();
+const hotelController = require('../controller/HotelController');
 
 
 
-app.get('/hotels', async (req, res) => {
-    try {
-        const hotels = await Hotel.find({});
-        res.json(hotels);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
 
-module.exports = app;
+router.get('/hotels', hotelController.getAllHotels);
+router.get('/hotel/:hotelId', hotelController.getHotelById);
+router.post('/hotels', hotelController.createHotel);
+router.put('/hotels/:hotelId', hotelController.updateHotel);
+router.delete('/hotels/:hotelId', hotelController.deleteHotel);
+
+module.exports = router;
