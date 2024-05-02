@@ -11,7 +11,6 @@ const secretKey = "Nitin";
 const path = require('path');
 
 
-const paymentRoute = require("./routes/Payment");
 
 
 app.use(session({
@@ -36,7 +35,7 @@ const google = require("./routes/Google")
 const Hotel = require("./routes/Hotel")
 const Restaurant = require('./routes/Restaurent')
 const Places = require('./routes/Places')
-const payment = require('./routes/Payment')
+
 
 
 
@@ -48,7 +47,7 @@ const payment = require('./routes/Payment')
 
 const URI = process.env.MONGODB_URI;
 
-mongoose.connect(URI, { dbName: "Exploreexpress" })
+mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority", { dbName: "Exploreexpress" })
   .then(() => console.log("Connection successful"))
 
 
