@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 import {
   faCompass, faBars, faHome, faUsers, faStar, faEnvelope,
   faCalendarAlt, faUserCircle, faSignOutAlt, faTimes
@@ -11,7 +13,9 @@ const Navbar = () => {
   const [newNavBar, setNewNavBar] = useState(false);
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
-  const apiurl = `http://localhost:4000`;
+
+  const apiurl = import.meta.env.VITE_APP_API_URL;
+  
   const isLoggedIn = () => localStorage.getItem('authType') !== null;
 
   useEffect(() => {
