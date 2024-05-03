@@ -8,7 +8,11 @@ const MidHome = () => {
     const [places, setPlaces] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const apiurl = "http://localhost:4000"
+
+   
+    const apiurl = import.meta.env.VITE_APP_API_URL;
+
+    
     useEffect(() => {
         const fetchData = async () => {
           try {

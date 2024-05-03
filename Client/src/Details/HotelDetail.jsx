@@ -13,6 +13,7 @@ import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 import { FaEnvelopeOpenText } from 'react-icons/fa';
+import Loading from '../components/Load';
 
 // Set up default icon paths in Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -22,7 +23,9 @@ L.Icon.Default.mergeOptions({
     shadowUrl,
 });
 
-const apiurl = "http://localhost:4000";
+
+
+const apiurl = import.meta.env.VITE_APP_API_URL;
 
 const HotelDetail = () => {
     const { hotelId } = useParams();
@@ -56,7 +59,7 @@ const HotelDetail = () => {
     };
 
     if (isLoading) {
-        return <div className="text-center p-5">Loading...</div>;
+        return <div className="text-center p-5"><Loading /></div>;
     }
 
     if (error) {

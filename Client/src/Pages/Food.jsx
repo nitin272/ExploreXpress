@@ -1,19 +1,21 @@
 import React, { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';  
+import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Loading from '../components/Load';  // Import your Loading component
 
 const UserContext = createContext();
-const apiurl = "http://localhost:4000";
+
+
+const apiurl = import.meta.env.VITE_APP_API_URL;
 
 const Restaurant = () => {
   const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [selectedRestaurantId, setSelectedRestaurantId] = useState(null);
+  const [loading, setLoading] = useState(false);  // State to handle loading
 
   useEffect(() => {
     const checkLoginStatus = () => {
@@ -28,11 +30,16 @@ const Restaurant = () => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);  // Start loading
     axios.get(`${apiurl}/restaurants`)
-      .then(response => setRestaurants(response.data))
+      .then(response => {
+        setRestaurants(response.data);
+        setLoading(false);  // Stop loading when the data is received
+      })
       .catch(error => {
         console.error('There was an error fetching the restaurants data:', error);
         alert('Failed to fetch restaurants. Please try again later.');
+        setLoading(false);  // Stop loading on error
       });
   }, []);
 
@@ -61,22 +68,24 @@ const Restaurant = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className="p-2 mb-5 w-full md:w-1/3 border rounded shadow"
         />
-        <div className="flex flex-wrap gap-5">
-          {filteredRestaurants.map((restaurant) => (
-            <div key={restaurant._id} className="w-full md:w-1/3 lg:w-1/4 p-4 border shadow-lg rounded-lg">
-              <img src={restaurant.image1} alt={restaurant.name} className="w-full h-48 object-cover rounded-lg" />
-              <h3 className="text-lg font-medium my-2">{restaurant.name}</h3>
-              <p className="text-sm">Rating: {restaurant.Rating}</p>
-              <p className="text-sm">Address: {restaurant.address}</p>
-              <button
-                aria-label={`Book at ${restaurant.name}`}
-                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onClick={() => handleBookTable(restaurant._id)}>
-                Book Table
-              </button>
-            </div>
-          ))}
-        </div>
+        {loading ? <Loading /> : (
+          <div className="flex flex-wrap gap-5">
+            {filteredRestaurants.map((restaurant) => (
+              <div key={restaurant._id} className="w-full md:w-1/3 lg:w-1/4 p-4 border shadow-lg rounded-lg">
+                <img src={restaurant.image1} alt={restaurant.name} className="w-full h-48 object-cover rounded-lg" />
+                <h3 className="text-lg font-medium my-2">{restaurant.name}</h3>
+                <p className="text-sm">Rating: {restaurant.Rating}</p>
+                <p className="text-sm">Address: {restaurant.address}</p>
+                <button
+                  aria-label={`Book at ${restaurant.name}`}
+                  className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={() => handleBookTable(restaurant._id)}>
+                  Book Table
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <Footer />
     </UserContext.Provider>

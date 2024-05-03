@@ -10,11 +10,12 @@ const AuthForm = () => {
   const [name, setName] = useState('');
   const navigate = useNavigate();
 
-  const apiUrl = "http://localhost:4000";
+
+  const apiurl = import.meta.env.VITE_APP_API_URL;
 
   const handleAuth = async (isSignUp, userData) => {
     try {
-      const endpoint = isSignUp ? `${apiUrl}/auth/signup` : `${apiUrl}/auth/login`;
+      const endpoint = isSignUp ? `${apiUrl}/auth/signup` : `${apiurl}/auth/login`;
       const response = await axios.post(endpoint, userData);
       const { token, userId, email, imageUrl } = response.data;
       localStorage.setItem('authType', 'manual');
@@ -33,7 +34,7 @@ const AuthForm = () => {
   };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `${apiUrl}/auth/google/callback`;
+    window.location.href = `${apiurl}/auth/google/callback`;
     localStorage.setItem('authType', 'google');
   };
 

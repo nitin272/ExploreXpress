@@ -11,7 +11,7 @@ import Account from './components/Account';
 import HotelDetail from './Details/HotelDetail';
 import AboutUs from './components/About';
 import RestaurantDetail from './Details/RestaurentDetail';
-
+import PlaceDetail from './Details/PlacesDetail';
 
 const App = () => {
   return (
@@ -29,6 +29,7 @@ const App = () => {
           <Route path="/trains" element={<Train />} />
           <Route path="/hotel/:hotelId" element={<HotelDetail />} />
           <Route path="/restaurant/:restaurantId" element={<RestaurantDetail />} />
+          <Route path="/place/:placeId" element={<PlaceDetail />} />
     
      
         </Routes>
