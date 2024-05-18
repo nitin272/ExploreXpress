@@ -11,12 +11,14 @@ const secretKey = "Nitin";
 const path = require('path');
 
 
-const paymentRoute = require("./routes/Payment");
+
+
 
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
+  
   saveUninitialized: true,
   cookie: { secure: false }  // Set to true if using HTTPS
 }));
@@ -25,7 +27,7 @@ app.use(session({
 
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:4500',  // This should match the URL of your frontend application
+  origin: 'https://explorexpress-n2ek.onrender.com',  // This should match the URL of your frontend application
   credentials: true, // This is important for cookies/token and basic auth
 };
 
@@ -36,7 +38,7 @@ const google = require("./routes/Google")
 const Hotel = require("./routes/Hotel")
 const Restaurant = require('./routes/Restaurent')
 const Places = require('./routes/Places')
-const payment = require('./routes/Payment')
+
 
 
 
