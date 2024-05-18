@@ -13,8 +13,6 @@ const path = require('path');
 
 
 
-
-
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -25,13 +23,23 @@ app.use(session({
 
 
 
-app.use(express.json());
+const allowedOrigins = ['https://explorexpress-n2ek.onrender.com', 'http://localhost:4500'];
+
 const corsOptions = {
-  origin: 'https://explorexpress-n2ek.onrender.com',  // This should match the URL of your frontend application
-  credentials: true, // This is important for cookies/token and basic auth
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
+
+
+
 
 const Login = require("./routes/Login")
 const google = require("./routes/Google")
@@ -50,7 +58,7 @@ const Places = require('./routes/Places')
 
 const URI = process.env.MONGODB_URI;
 
-mongoose.connect(URI, { dbName: "Exploreexpress" })
+mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority", { dbName: "Exploreexpress" })
   .then(() => console.log("Connection successful"))
 
 
