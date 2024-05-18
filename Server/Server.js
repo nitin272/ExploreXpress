@@ -23,7 +23,7 @@ app.use(session({
 
 
 
-const allowedOrigins = ['https://explorexpress-n2ek.onrender.com', 'http://localhost:4500'];
+const allowedOrigins = ['http://explorexpress-n2ek.onrender.com', 'http://localhost:4500'];
 
 const corsOptions = {
   origin: function (origin, callback) {
