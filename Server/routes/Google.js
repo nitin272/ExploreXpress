@@ -12,12 +12,17 @@ const clientid =process.env.CLIENT_ID
 const clientsecret = process.env.CLIENT_SECRET
 
 
-app.use(cors({
-    origin: 'http://localhost:4500', // Allows all domains to access your server
+const corsOptions = {
+    origin: (origin, callback) => {
+      callback(null, true); // Allow all origins
+    },
     methods: "GET, POST, PUT, DELETE",
-    
     credentials: true // Be cautious with this setting when allowing all origins
-}));
+  };
+  
+  app.use(cors(corsOptions));
+
+  
 
 app.use(express.json());
 
