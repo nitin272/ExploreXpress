@@ -24,7 +24,7 @@ app.use(session({
 
 app.use(express.json());
 const corsOptions = {
-  origin: 'http://localhost:4500',  // This should match the URL of your frontend application
+  origin: 'http://explorexpress-n2ek.onrender.com,  // This should match the URL of your frontend application
   credentials: true, // This is important for cookies/token and basic auth
 };
 
