@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../Models/Login');
-const userdb = require("../Models/Google");
+const User = require('../Modals/Login');
+const userdb = require("../Modals/Google");
 const secretKey = "Nitin";
 
 

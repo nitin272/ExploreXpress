@@ -6,7 +6,7 @@ const PORT = 6005;
 const session = require("express-session");
 const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
-const userdb = require("../Models/Google")
+const userdb = require("../Modals/Google")
 
 const clientid =process.env.CLIENT_ID
 const clientsecret = process.env.CLIENT_SECRET
