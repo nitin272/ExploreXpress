@@ -1,4 +1,4 @@
-const Places = require('../Models/Places');
+const Places = require('../Modals/Places');
 
 // Get all places
 exports.getAllPlaces = async (req, res, next) => {

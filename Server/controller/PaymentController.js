@@ -1,6 +1,6 @@
 const {instance} = require('../utils/razorPay')
 const crypto = require('crypto')
-const {paymentModel} = require('../Models/Payment') 
+const {paymentModel} = require('../Modals/Payment') 
 const paymentCheckout = async (req,res)=>{
     const {price} = req.body
     try {
@@ -11,7 +11,7 @@ const paymentCheckout = async (req,res)=>{
             currency : "INR"
         }
     
-        
+
         const order = await instance.orders.create(options)
     
         console.log(order)

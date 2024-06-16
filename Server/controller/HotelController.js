@@ -1,4 +1,4 @@
-const Hotel = require('../Models/Hotel');
+const Hotel = require('../Modals/Hotel');
 
 // Get all hotels
 exports.getAllHotels = async (req, res) => {
