@@ -26,6 +26,7 @@ exports.getPlaceById = async (req, res, next) => {
 };
 
 // Create a new place
+
 exports.createPlace = async (req, res, next) => {
     const place = new Places(req.body);
     try {

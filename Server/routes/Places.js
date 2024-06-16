@@ -6,7 +6,9 @@ const PlacesController = require('../controller/PlaceController');
 router.get('/places', PlacesController.getAllPlaces);
 router.get('/places/:id', PlacesController.getPlaceById);
 
+
 router.post('/places', PlacesController.createPlace);
+
 router.put('/places/:id', PlacesController.updatePlace);
 router.delete('/places/:id', PlacesController.deletePlace);
 
