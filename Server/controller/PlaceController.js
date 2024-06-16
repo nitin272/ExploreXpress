@@ -10,6 +10,7 @@ exports.getAllPlaces = async (req, res, next) => {
     }
 };
 
+
 // Get a single place by ID
 exports.getPlaceById = async (req, res, next) => {
     try {

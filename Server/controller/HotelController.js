@@ -10,6 +10,8 @@ exports.getAllHotels = async (req, res) => {
     }
 };
 
+
+
 // Get a single hotel by ID
 exports.getHotelById = async (req, res) => {
     try {
