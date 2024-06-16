@@ -23,6 +23,7 @@ exports.getRestaurantById = async (req, res, next) => {
     }
 };
 
+
 exports.createRestaurant = async (req, res, next) => {
     const restaurant = new Restaurant(req.body);
     try {
