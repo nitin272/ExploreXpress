@@ -23,6 +23,7 @@ app.use(session({
 
 
 
+
 const allowedOrigins = ["http://explorexpress-n2ek.onrender.com"];
 
 const corsOptions = {
@@ -63,5 +64,6 @@ mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?re
 
 
 app.listen(4000, () => console.log("Server is running on port 4000"));
+
 
 
