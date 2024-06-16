@@ -15,4 +15,5 @@ router.get("/user/:userId", userController.getUserById);
 router.post("/verify-password", userController.verifyPassword);
 router.put("/user/:userId", userController.updateUser);
 
+
 module.exports = router;

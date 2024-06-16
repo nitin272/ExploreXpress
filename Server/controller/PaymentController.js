@@ -11,6 +11,7 @@ const paymentCheckout = async (req,res)=>{
             currency : "INR"
         }
     
+        
         const order = await instance.orders.create(options)
     
         console.log(order)

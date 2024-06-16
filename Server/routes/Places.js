@@ -11,3 +11,4 @@ router.put('/places/:id', PlacesController.updatePlace);
 router.delete('/places/:id', PlacesController.deletePlace);
 
 module.exports = router;
+
