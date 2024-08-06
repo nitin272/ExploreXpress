@@ -24,7 +24,7 @@ app.use(session({
 
 
 const allowedOrigins = [
-  'http://localhost:4500', "https://explorexpress-n2ek.onrender.com",
+  'http://localhost:4500', "https://explorexpress-n2ek.onrender.com","https://explorexxpresss.netlify.app",
   // other allowed origins can be added here
 ];
 
