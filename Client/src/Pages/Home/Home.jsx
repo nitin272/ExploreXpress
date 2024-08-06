@@ -43,11 +43,6 @@ const Home = () => {
                   <FontAwesomeIcon icon={faHotel} style={{ color: "#8A2BE2", fontSize: "33px" }} /> Hotels
                 </Link>
               </li>
-              <li style={{ color: "#3E2723" }}>
-                <Link to="/trains">
-                  <FontAwesomeIcon icon={faTrain} style={{ color: "#0E4D92", fontSize: "33px" }} />Trains
-                </Link>
-              </li>
               <li style={{ color: "black" }}>
                 <Link to="/Restaurent">
                   <FontAwesomeIcon icon={faUtensils} style={{ color: "#FF5722", fontSize: "33px" }} /> Restaurants

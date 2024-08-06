@@ -5,19 +5,7 @@ const userSchema = new mongoose.Schema({
     displayName: String,
     email: String,
     image: String,
-    Hotel: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Hotel'
-      }],
-      Places: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Place'
-      }],
-      Restaurant: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Restaurant'
-      }]
-      
+    coverImageUrl: String,
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
