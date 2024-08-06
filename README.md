@@ -67,6 +67,6 @@ Day 6: Train Booking Feature - Frontend
 
 
 
-Frontend-Deploy Link  = https://explore-xpress.netlify.app/
+Frontend-Deploy Link  = https://explorexxpresss.netlify.app
 
 #deployed-Backend-Server = https://explorexpress-n2ek.onrender.com/
