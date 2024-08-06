@@ -20,6 +20,7 @@ router.put("/user/:userId", userController.updateUser);
 
 
 router.post('/users/:userId/profileImage', upload.single('profileImage'), userController.uploadProfileImage);
+
 router.delete('/users/:userId/profileImage', userController.deleteProfileImage);
 
 router.post('/users/:userId/cover-image', upload.single('coverImage'), userController.uploadCoverImage);
@@ -27,3 +28,4 @@ router.delete('/users/:userId/cover-image', userController.deleteCoverImage);
 
 
 module.exports = router;
+

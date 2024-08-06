@@ -27,10 +27,14 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (user && await bcrypt.compare(password, user.password)) {
+      
       const token = jwt.sign({ userId: user._id }, secretKey, { expiresIn: '1h' });
+
       res.json({ message: "Login successful", token, userId: user._id });
+
     } else {
       res.status(401).json({ message: "Invalid password or email" });
+
     }
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error: error.message });

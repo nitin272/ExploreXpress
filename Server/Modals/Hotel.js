@@ -8,7 +8,7 @@ const hotelSchema = new Schema({
     price: { type: Number, required: true, min: 0 },
     features: { type: [String] },
     address: { type: String, required: true },
-    coordinates: { type: String }, // Consider using GeoJSON for geospatial queries
+    coordinates: { type: String }, 
     imageUrls: { type: [String] }
 }, { timestamps: true, collection: 'Hotel' });
 
