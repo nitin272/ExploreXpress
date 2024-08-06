@@ -79,10 +79,14 @@ exports.updateRestaurant = async (req, res) => {
     }
 };
 
+
 // Delete restaurant image
+
 exports.deleteRestaurantImage = async (req, res) => {
+
     try {
         const { id: restaurantId } = req.params;
+        
         let { imageUrls } = req.body;
 
         console.log(`Received request to delete images from restaurant: ${restaurantId}`);

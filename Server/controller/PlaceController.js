@@ -100,6 +100,7 @@ exports.deletePlaceImage = async (req, res) => {
 
         if (!Array.isArray(existingPlace.imageUrls)) {
             console.error('Place image URLs are not in the expected format');
+            
             return res.status(500).json({ message: 'Place image URLs not in expected format' });
         }
 

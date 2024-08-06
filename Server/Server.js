@@ -50,7 +50,8 @@ const Places = require('./routes/Places')
 
 const URI = process.env.MONGODB_URI;
 
-mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority", { dbName: "Exploreexpress" })
+
+mongoose.connect(URI, { dbName: "Exploreexpress" })
   .then(() => console.log("Connection successful"))
 
 

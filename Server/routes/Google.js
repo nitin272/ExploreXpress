@@ -91,6 +91,8 @@ app.get("/auth/google/callback",passport.authenticate("google",{
     failureRedirect:"http://localhost:4500/login"
 }))
 
+
+
 app.get("/login/success",async(req,res)=>{
 
     if(req.user){
@@ -123,6 +125,7 @@ app.get("/logout",(req,res,next)=>{
       res.status(500).json({ message: "Error fetching user", error: error.message });
     }
   });
+
 
 
 app.post('/addHotel/:userId', async (req, res) => {

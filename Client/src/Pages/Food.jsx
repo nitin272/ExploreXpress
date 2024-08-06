@@ -3,7 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import Loading from '../components/Load'; // Corrected import
+import Loading from '../components/Load';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserContext = createContext();
 
@@ -20,9 +22,12 @@ const FullStackRestaurantApp = () => {
   const [showAddRestaurantForm, setShowAddRestaurantForm] = useState(false);
 
   const [newRestaurant, setNewRestaurant] = useState({
+    city: '',
     name: '',
-    rating: '',
+    rating: 'Not Rated',
     address: '',
+    range: '',
+    cuisine: '',
     imageUrls: []
   });
 
@@ -66,9 +71,12 @@ const FullStackRestaurantApp = () => {
       setEditMode(true);
       setEditRestaurantId(restaurantId);
       setNewRestaurant({
+        city: restaurantToEdit.city,
         name: restaurantToEdit.name,
         rating: restaurantToEdit.rating,
         address: restaurantToEdit.address,
+        range: restaurantToEdit.range,
+        cuisine: restaurantToEdit.cuisine,
         imageUrls: restaurantToEdit.imageUrls // Assuming imageUrls is an array of URLs
       });
       setShowAddRestaurantForm(true); // Show the form
@@ -106,14 +114,14 @@ const FullStackRestaurantApp = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    if (newRestaurant.imageUrls.length + files.length > 5) {
-      alert("You can upload a maximum of 5 images.");
+    if (newRestaurant.imageUrls.length + files.length > 10) {
+      alert("You can upload a maximum of 10 images.");
       return;
     }
 
     setNewRestaurant({
       ...newRestaurant,
-      imageUrls: [...newRestaurant.imageUrls, ...files.slice(0, 5 - newRestaurant.imageUrls.length)]
+      imageUrls: [...newRestaurant.imageUrls, ...files.slice(0, 10 - newRestaurant.imageUrls.length)]
     });
   };
 
@@ -147,12 +155,19 @@ const FullStackRestaurantApp = () => {
   
     try {
       const formData = new FormData();
+      formData.append('city', newRestaurant.city);
       formData.append('name', newRestaurant.name);
       formData.append('rating', newRestaurant.rating);
       formData.append('address', newRestaurant.address);
+      formData.append('range', newRestaurant.range);
+      formData.append('cuisine', newRestaurant.cuisine);
   
       newRestaurant.imageUrls.forEach(file => {
-        formData.append('images', file);
+        if (typeof file === 'string') {
+          formData.append('imageUrls', file);
+        } else {
+          formData.append('images', file);
+        }
       });
   
       const config = {
@@ -161,13 +176,33 @@ const FullStackRestaurantApp = () => {
         }
       };
   
-      // Handle POST or PUT request based on editMode
       const response = editMode
         ? await axios.put(`${apiurl}/restaurants/${editRestaurantId}`, formData, config)
         : await axios.post(`${apiurl}/restaurants`, formData, config);
   
       console.log('Restaurant added/updated successfully:', response.data);
-      // Handle any UI updates or state changes after successful response
+      toast.success(`Restaurant ${editMode ? 'updated' : 'added'} successfully!`);
+  
+      if (editMode) {
+        setRestaurants(restaurants.map((restaurant) =>
+          restaurant._id === editRestaurantId ? response.data : restaurant
+        ));
+      } else {
+        setRestaurants([...restaurants, response.data]);
+      }
+  
+      setShowAddRestaurantForm(false);
+      setNewRestaurant({
+        city: '',
+        name: '',
+        rating: 'Not Rated',
+        address: '',
+        range: '',
+        cuisine: '',
+        imageUrls: []
+      });
+      setEditMode(false);
+      setEditRestaurantId(null);
     } catch (error) {
       console.error('Error adding/updating restaurant:', error);
       alert('Failed to add/update restaurant. Please try again.');
@@ -185,7 +220,15 @@ const FullStackRestaurantApp = () => {
             setShowAddRestaurantForm(!showAddRestaurantForm);
             setEditMode(false); // Ensure edit mode is turned off
             setEditRestaurantId(null);
-            setNewRestaurant({ name: '', rating: '', address: '', imageUrls: [] });
+            setNewRestaurant({
+              city: '',
+              name: '',
+              rating: 'Not Rated',
+              address: '',
+              range: '',
+              cuisine: '',
+              imageUrls: []
+            });
           }}
         >
           {showAddRestaurantForm ? "Cancel Add Restaurant" : "Add New Restaurant"}
@@ -195,7 +238,19 @@ const FullStackRestaurantApp = () => {
             <h3 className="text-xl font-semibold mb-2">{editMode ? 'Edit Restaurant' : 'Add New Restaurant'}</h3>
             <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white rounded-lg shadow-md p-6">
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Restaurant Name</label>
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700">City</label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={newRestaurant.city}
+                  onChange={handleInputChange}
+                  required
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                 <input
                   type="text"
                   id="name"
@@ -203,20 +258,29 @@ const FullStackRestaurantApp = () => {
                   value={newRestaurant.name}
                   onChange={handleInputChange}
                   required
-                  className="p-2 w-full border rounded shadow-sm"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
               <div className="mb-4">
                 <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Rating</label>
-                <input
-                  type="number"
+                <select
                   id="rating"
                   name="rating"
                   value={newRestaurant.rating}
                   onChange={handleInputChange}
-                  required
-                  className="p-2 w-full border rounded shadow-sm"
-                />
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option>Not Rated</option>
+                  <option>1</option>
+                  <option>1.5</option>
+                  <option>2</option>
+                  <option>2.5</option>
+                  <option>3</option>
+                  <option>3.5</option>
+                  <option>4</option>
+                  <option>4.5</option>
+                  <option>5</option>
+                </select>
               </div>
               <div className="mb-4">
                 <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
@@ -227,41 +291,61 @@ const FullStackRestaurantApp = () => {
                   value={newRestaurant.address}
                   onChange={handleInputChange}
                   required
-                  className="p-2 w-full border rounded shadow-sm"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
-              {/* Display existing images with delete option */}
-              {newRestaurant.imageUrls.length > 0 && (
-                <div className="mb-4">
-                  {newRestaurant.imageUrls.map((file, index) => (
-                    <div key={index} className="relative inline-block mr-2 mb-2">
-                      <img
-                        src={typeof file === 'string' ? file : URL.createObjectURL(file)}
-                        alt={`Preview ${index}`}
-                        className="h-20 w-20 object-cover rounded"
-                      />
+              <div className="mb-4">
+                <label htmlFor="range" className="block text-sm font-medium text-gray-700">Price Range</label>
+                <input
+                  type="text"
+                  id="range"
+                  name="range"
+                  value={newRestaurant.range}
+                  onChange={handleInputChange}
+                  required
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="cuisine" className="block text-sm font-medium text-gray-700">Cuisine</label>
+                <input
+                  type="text"
+                  id="cuisine"
+                  name="cuisine"
+                  value={newRestaurant.cuisine}
+                  onChange={handleInputChange}
+                  required
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="imageUrls" className="block text-sm font-medium text-gray-700">Images (max 10)</label>
+                <input
+                  type="file"
+                  id="imageUrls"
+                  name="imageUrls"
+                  multiple
+                  onChange={handleImageChange}
+                  className="mt-1 block w-full text-sm text-gray-500"
+                />
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {newRestaurant.imageUrls.map((url, index) => (
+                    <div key={index} className="relative">
+                      {typeof url === 'string' ? (
+                        <img src={url} alt={`Preview ${index}`} className="w-24 h-24 object-cover rounded-md border" />
+                      ) : (
+                        <img src={URL.createObjectURL(url)} alt={`Preview ${index}`} className="w-24 h-24 object-cover rounded-md border" />
+                      )}
                       <button
                         type="button"
-                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
                         onClick={() => handleDeleteImage(index)}
+                        className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full"
                       >
-                        &times;
+                        X
                       </button>
                     </div>
                   ))}
                 </div>
-              )}
-              <div className="mb-4">
-                <label htmlFor="images" className="block text-sm font-medium text-gray-700">Upload Images (up to 5)</label>
-                <input
-                  type="file"
-                  id="images"
-                  name="images"
-                  accept="image/*"
-                  multiple
-                  onChange={handleImageChange}
-                  className="p-2 w-full border rounded shadow-sm"
-                />
               </div>
               <button
                 type="submit"
@@ -276,41 +360,37 @@ const FullStackRestaurantApp = () => {
           <Loading />
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filteredRestaurants.map(restaurant => (
-              <div key={restaurant._id} className="bg-white rounded-lg overflow-hidden shadow-md">
-                <div className="relative h-48">
-                  {restaurant.imageUrls && restaurant.imageUrls.length > 0 && (
-                    <img
-                      src={restaurant.imageUrls[0]}
-                      alt={`Image of ${restaurant.name}`}
-                      className="h-full w-full object-cover"
-                    />
-                  )}
+            {filteredRestaurants.map((restaurant) => (
+              <div key={restaurant._id} className="bg-white rounded-lg shadow-md p-4">
+                <img src={restaurant.imageUrls[0]} alt={restaurant.name} className="w-full h-48 object-cover rounded-t-lg mb-4" />
+                <h3 className="text-xl font-semibold mb-2">{restaurant.name}</h3>
+                <p className="text-sm text-gray-700">{restaurant.address}</p>
+                <p className="text-sm text-gray-500">Rating: {restaurant.rating}</p>
+                <p className="text-sm text-gray-500">Price Range: {restaurant.range}</p>
+                <p className="text-sm text-gray-500">Cuisine: {restaurant.cuisine}</p>
+                <div className="mt-4 flex justify-between">
                   <button
-                    className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
-                    onClick={() => handleDeleteRestaurant(restaurant._id)}
+                    onClick={() => handleBookTable(restaurant._id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   >
-                    &times;
+                    Book Table
                   </button>
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold">{restaurant.name}</h3>
-                  <p className="text-gray-600">Rating: {restaurant.rating}</p>
-                  <p className="text-gray-600">Address: {restaurant.address}</p>
-                  <div className="flex mt-4">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleBookTable(restaurant._id)}
-                    >
-                      Book Table
-                    </button>
-                    <button
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
-                      onClick={() => handleEditRestaurant(restaurant._id)}
-                    >
-                      Edit
-                    </button>
-                  </div>
+                  {isLoggedIn && (
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleEditRestaurant(restaurant._id)}
+                        className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeleteRestaurant(restaurant._id)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

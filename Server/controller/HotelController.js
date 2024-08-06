@@ -103,7 +103,9 @@ exports.deleteHotelImage = async (req, res) => {
 
         if (!Array.isArray(existingHotel.imageUrls)) {
             console.error('Hotel image URLs are not in the expected format');
+            
             return res.status(500).json({ message: 'Hotel image URLs not in expected format' });
+
         }
 
         for (const imageUrl of imageUrls) {
