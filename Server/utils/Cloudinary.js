@@ -13,8 +13,10 @@ const uploadOnCloudinary = async (filePaths) => {
     try {
         const promises = filePaths.map(async (filePath) => {
             const response = await cloudinary.uploader.upload(filePath, {
+                
                 resource_type: "auto"
             });
+
             fs.unlinkSync(filePath); // Remove local file after upload
             return response.secure_url; // Return the secure URL from Cloudinary
         });
