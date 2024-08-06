@@ -15,7 +15,7 @@ const AuthForm = () => {
 
   const handleAuth = async (isSignUp, userData) => {
     try {
-      const endpoint = isSignUp ? `${apiUrl}/auth/signup` : `${apiurl}/auth/login`;
+      const endpoint = isSignUp ? `${apiurl}/auth/signup` : `${apiurl}/auth/login`;
       const response = await axios.post(endpoint, userData);
       const { token, userId, email, imageUrl } = response.data;
       localStorage.setItem('authType', 'manual');
