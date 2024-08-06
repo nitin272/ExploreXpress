@@ -86,7 +86,7 @@ exports.deleteRestaurantImage = async (req, res) => {
 
     try {
         const { id: restaurantId } = req.params;
-        
+
         let { imageUrls } = req.body;
 
         console.log(`Received request to delete images from restaurant: ${restaurantId}`);
@@ -130,8 +130,11 @@ exports.deleteRestaurantImage = async (req, res) => {
 // Delete restaurant
 exports.deleteRestaurant = async (req, res) => {
     try {
+        
         const restaurant = await Restaurant.findByIdAndDelete(req.params.id);
+
         if (!restaurant) {
+
             return res.status(404).json({ message: 'Restaurant not found' });
         }
         res.json({ message: 'Restaurant deleted' });
