@@ -6,7 +6,7 @@ import AuthForm from './components/Login';
 import Culture from './Pages/Culture';
 import Places from './Pages/Places';
 import Food from './Pages/Food';
-import Train from './Pages/Train';
+// import Train from './Pages/Train';
 import Account from './components/Account';
 import HotelDetail from './Details/HotelDetail';
 import AboutUs from './components/About';
@@ -26,7 +26,7 @@ const App = () => {
           <Route path="/Restaurent" element={<Food />} />
           <Route path="/login" element={<AuthForm />} />
           <Route path="Hotel" element={<Hotel />} />
-          <Route path="/trains" element={<Train />} />
+          {/* <Route path="/trains" element={<Train />} /> */}
           <Route path="/hotel/:hotelId" element={<HotelDetail />} />
           <Route path="/restaurant/:restaurantId" element={<RestaurantDetail />} />
           <Route path="/place/:placeId" element={<PlaceDetail />} />

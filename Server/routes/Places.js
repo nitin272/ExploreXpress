@@ -1,17 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer'); 
 const PlacesController = require('../controller/PlaceController');
 
-// Routes for handling places
+
+const upload = require('../middleware/upload') 
+
+
 router.get('/places', PlacesController.getAllPlaces);
 router.get('/places/:id', PlacesController.getPlaceById);
 
+router.post('/places', upload.array('images', 5), PlacesController.createPlace);
 
-router.post('/places', PlacesController.createPlace);
-
-router.put('/places/:id', PlacesController.updatePlace);
-
+router.put('/places/:id', upload.array('images', 5), PlacesController.updatePlace); 
 router.delete('/places/:id', PlacesController.deletePlace);
 
-module.exports = router;
+router.delete('/places/:placeId/images', PlacesController.deletePlaceImage); 
 
+module.exports = router;

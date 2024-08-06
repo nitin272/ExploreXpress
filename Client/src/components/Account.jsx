@@ -2,20 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from "../components/Navbar";
 import LoadingSpinner from './Load';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import './Account.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './Footer';
-import config from '../assets/api.json';
+import { AiOutlinePlus, AiOutlineClose } from 'react-icons/ai';
 
 const Account = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [isEditing, setIsEditing] = useState(false);
+    const [coverImageFile, setCoverImageFile] = useState(null);
     const navigate = useNavigate();
 
     const apiurl = import.meta.env.VITE_APP_API_URL;
+
     useEffect(() => {
         const authType = localStorage.getItem('authType');
         if (!authType) {
@@ -24,47 +23,51 @@ const Account = () => {
         }
 
         const fetchUserData = async () => {
-            if (authType === 'manual') {
+            try {
                 const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
                 const { userId, token } = storedUserData.user || storedUserData;
                 if (!userId) {
                     navigate('/login');
                     return;
                 }
-                try {
-                    const response = await fetch(`${apiurl}/user/${userId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`,
-                        },
-                    });
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch user data');
-                    }
-                    const data = await response.json();
-                    setUserData(data);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error.message || 'Failed to fetch user data');
-                    setLoading(false);
-                }
-            } else if (authType === 'google') {
-                const user = JSON.parse(localStorage.getItem('user'));
-                setUserData({
-                    name: user.displayName,
-                    email: user.email,
-                    imageUrl: user.image,
+
+                const response = await fetch(`${apiurl}/user/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
                 });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    const data = await response.json();
+                    setUserData({
+                        name: data.username,
+                        email: data.email,
+                        profileImageUrl: data.imageUrl,
+                        coverImageUrl: data.coverImageUrl || '',
+                    });
+                } else {
+                    throw new Error('Oops! Unexpected response format.');
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                setError('Failed to fetch user data');
                 setLoading(false);
             }
         };
 
         fetchUserData();
-    }, [navigate]);
+    }, [apiurl, navigate]);
 
     const handleLogout = () => {
-     localStorage.clear();
+        localStorage.clear();
         navigate('/login');
     };
 
@@ -98,90 +101,178 @@ const Account = () => {
                 if (!response.ok) {
                     throw new Error('Failed to update user data');
                 }
+
                 const responseData = await response.json();
                 setUserData(responseData.user);
                 setIsEditing(false);
             } catch (error) {
+                console.error('Failed to update user data:', error);
                 alert('Failed to update user data. Please try again later.');
             }
         }
     };
 
+    const handleUploadCoverImage = async () => {
+        const authType = localStorage.getItem('authType');
+        if (authType === 'manual' && coverImageFile) {
+            const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+            const { userId, token } = storedUserData.user || storedUserData;
+
+            const formData = new FormData();
+            formData.append('coverImage', coverImageFile);
+
+            try {
+                const response = await fetch(`${apiurl}/user/${userId}/cover-image`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to upload cover image');
+                }
+
+                const responseData = await response.json();
+                setUserData(prevData => ({
+                    ...prevData,
+                    coverImageUrl: responseData.coverImageUrl,
+                }));
+
+                setCoverImageFile(null);
+            } catch (error) {
+                console.error('Failed to upload cover image:', error);
+                alert('Failed to upload cover image. Please try again later.');
+            }
+        } else {
+            alert('Please select a cover image to upload.');
+        }
+    };
+
+    const handleDeleteCoverImage = async () => {
+        const authType = localStorage.getItem('authType');
+        if (authType === 'manual' && userData.coverImageUrl) {
+            const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+            const { userId, token } = storedUserData.user || storedUserData;
+
+            try {
+                const response = await fetch(`${apiurl}/user/${userId}/cover-image`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete cover image');
+                }
+
+                setUserData(prevData => ({
+                    ...prevData,
+                    coverImageUrl: '',
+                }));
+            } catch (error) {
+                console.error('Failed to delete cover image:', error);
+                alert('Failed to delete cover image. Please try again later.');
+            }
+        } else {
+            alert('No cover image to delete.');
+        }
+    };
+
+    const handleCoverImageChange = (e) => {
+        const file = e.target.files[0];
+        setCoverImageFile(file);
+    };
+
+    const renderProfileImageEditButton = () => {
+        return null; // Placeholder function since image upload functionality is removed
+    };
+
     if (loading) {
         return (
-            <>
+            <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
                 <Navbar />
                 <LoadingSpinner />
-            </>
+            </div>
         );
     }
 
     if (error) {
         return (
-            <>
+            <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
                 <Navbar />
                 <div className="error-message">{error}</div>
-                <button onClick={handleLogout}>Log Out</button>
-            </>
+                <button onClick={handleLogout} className="mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300 ease-in-out">
+                    Log Out
+                </button>
+            </div>
         );
     }
 
     return (
-        <>
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 animate-fade-in">
+        <div className="min-h-screen bg-gray-100">
             <Navbar />
-            <div className='w-full max-w-4xl mx-auto bg-white shadow-xl rounded-lg overflow-hidden transition duration-500 ease-in-out hover:shadow-2xl'>
-                <div className='px-8 py-6 border-b border-gray-300'>
-                    <h1 className="text-3xl font-bold text-gray-900">Your Profile</h1>
-                </div>
-                <div className="flex flex-col md:flex-row items-center p-6">
-                    {userData ? (
-                        <>
-                            <div className='flex-shrink-0 w-56 h-56 rounded-full overflow-hidden mt-4 md:mt-0 md:mr-6 transition duration-300 ease-in-out transform hover:scale-110 hover:rotate-6'>
-                                <img src={userData.imageUrl || 'defaultProfileImageUrl'} alt="Profile" className="w-full h-full object-cover" />
-                            </div>
-                            <div className='flex flex-col flex-1'>
-                                {isEditing && localStorage.getItem('authType') === 'manual' ? (
-                                    <form onSubmit={handleSubmitEdit} className="space-y-5">
-                                        <div>
-                                            <label className="block text-lg font-medium text-gray-700">Name</label>
-                                            <input type="text" name="name" className='mt-1 block w-full px-5 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 ease-in-out hover:border-indigo-300' defaultValue={userData.name} placeholder="Name"/>
-                                        </div>
-                                        <div>
-                                            <label className="block text-lg font-medium text-gray-700">Email</label>
-                                            <input type="email" name="email" className='mt-1 block w-full px-5 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 ease-in-out hover:border-indigo-300' defaultValue={userData.email} placeholder="Email"/>
-                                        </div>
-                                        <button type="submit" className='mt-4 w-full inline-flex justify-center py-3 px-6 border border-transparent shadow-sm text-lg font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 transition duration-300 ease-in-out'>Save Changes</button>
-                                    </form>
-                                ) : (
-                                    <>
-                                        <div className='text-xl font-semibold text-gray-800'>{userData.name}</div>
-                                        <div className='text-lg text-gray-500'>{userData.email}</div>
-                                        {localStorage.getItem('authType') === 'manual' && (
-                                            <button className='mt-5 inline-flex items-center justify-center px-6 py-3 border border-gray-300 shadow-sm text-lg font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out' onClick={toggleEdit}>
-                                                Edit Profile <FontAwesomeIcon icon={faEdit} className="ml-2 h-5 w-5" />
-                                            </button>
-                                        )}
-                                    </>
+            <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16">
+                <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg sm:overflow-visible">
+                    <div className="relative">
+                        <img
+                            src={userData.coverImageUrl || 'https://via.placeholder.com/150'}
+                            alt="Cover"
+                            className="w-full h-48 sm:h-64 object-cover object-center"
+                        />
+                        <div className="absolute inset-0 bg-black opacity-40"></div>
+                        {isEditing && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <label htmlFor="coverImageInput" className="cursor-pointer">
+                                    <AiOutlinePlus className="text-3xl text-gray-100 bg-gray-700 p-2 rounded-full hover:bg-gray-600" />
+                                </label>
+                                {userData.coverImageUrl && (
+                                    <button
+                                        onClick={handleDeleteCoverImage}
+                                        className="ml-4 cursor-pointer"
+                                    >
+                                        <AiOutlineClose className="text-3xl text-gray-100 bg-gray-700 p-2 rounded-full hover:bg-gray-600" />
+                                    </button>
                                 )}
                             </div>
-                        </>
-                    ) : (
-                        <div className="p-8 text-center">
-                            <span className="text-xl text-gray-800">Please log in to view your account.</span>
+                        )}
+                    </div>
+                    <div className="relative flex flex-col items-center sm:flex-row sm:justify-between px-6 py-8">
+                        <div className="relative mb-6 sm:mb-0">
+                            <img
+                                src={userData.profileImageUrl || 'https://via.placeholder.com/150'}
+                                alt="Profile"
+                                className="h-32 w-32 sm:h-48 sm:w-48 rounded-full ring-4 ring-white object-cover object-center"
+                                style={{ position: 'relative', top: '-50px' }}
+                            />
+                            {renderProfileImageEditButton()}
                         </div>
-                    )}
+                        <div className="text-center sm:text-left">
+                            <h1 className="text-4xl font-bold text-gray-900">{userData.name}</h1>
+                            <p className="text-2xl text-gray-600">{userData.email}</p>
+                            {localStorage.getItem('authType') === 'manual' && (
+                                <div className="mt-4 flex items-center">
+                                    <input type="file" onChange={handleCoverImageChange} accept="image/*" className="hidden" id="coverImageInput" />
+                                    <label htmlFor="coverImageInput" className="cursor-pointer mr-4">
+                                        <AiOutlinePlus className="text-xl text-gray-500 hover:text-gray-700" />
+                                    </label>
+                                    <button
+                                        onClick={isEditing ? handleSubmitEdit : toggleEdit}
+                                        className={`px-4 py-2 border border-transparent text-lg font-medium rounded-md text-white ${isEditing ? 'bg-blue-600 hover:bg-blue-700' : 'bg-green-600 hover:bg-green-700'} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out`}
+                                    >
+                                        {isEditing ? 'Save' : 'Edit Profile'}
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="text-center mt-10">
-                <button className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-lg font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 ease-in-out" onClick={() => navigate('/')}>Return Home</button>
-            </div>
+            <Footer />
         </div>
-        <Footer />
-        </>
     );
-    
-    
 };
 
 export default Account;

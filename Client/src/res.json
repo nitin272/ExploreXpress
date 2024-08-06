@@ -1,64 +1,28 @@
 [
     {
         "city": "Jaipur",
-        "name": "The Royal Root",
-        "image1": "https://media-cdn.tripadvisor.com/media/photo-s/12/2b/22/ae/the-royal-root-authentic.jpg",
-        "image2": "https://img4.nbstatic.in/tr:w-500/6074440a40e9df000b369a72.jpg",
-        "image3": "https://media-cdn.tripadvisor.com/media/photo-s/12/5f/ed/08/img-20180316-190343-largejpg.jpg",
-        "image4": "https://10619-2.s.cdn12.com/rests/original/313_505211933.jpg",
-        "image5": "https://img4.nbstatic.in/tr:w-500/6074441740e9df000b369a73.jpg",
-        "Rating": "4 ⭐⭐⭐⭐ ",
-        "address": "Tonk Rd, Sitapura Industrial Area, InterContinental, Jaipur, Rajasthan 302022",
-        "coordinates": "26.779529726988375, 75.82752633820382",
-        "Range":"₹1000-₹2000",
-        "cuisine":"Continental, North Indian, Chinese, South Indian, Fast Food"
+        "name": "Jantar Mantar",
+        "description": "An astronomical observatory with architectural instruments featuring giant sundials, a cosmic calendar, and other cool astronomical tools. It's a UNESCO World Heritage Site.",
+        "imageUrls": [
+            "https://media.istockphoto.com/id/487736282/photo/jantar-mantar-new-delhi-india-cngltrv1109.jpg?s=612x612&w=0&k=20&c=51feEMm4c4pPtpAh2sxLHnwSpJVkDUVJySrulcbZPDM=",
+            "https://jaipurtourism.co.in/images/places-to-visit/header/jantar-mantar-jaipur-entry-fee-timings-holidays-reviews-header.jpg"
+        ],
+        "address": "J6G8+RMC, Connaught Place, Sansad Marg, New Delhi, Delhi 110001",
+        "cost": "50",
+        "link": "https://en.wikipedia.org/wiki/Jantar_Mantar",
+        "timing": "9 am-4:30 pm"
     },
     {
         "city": "Jaipur",
-        "name": "Monarch Restaurent",
-        "image1": "https://im1.dineout.co.in/images/uploads/restaurant/sharpen/5/c/s/p51250-164075832661cbfc36f2fc1.jpg?tr=tr:n-xlarge",
-        "image2": "https://cf.bstatic.com/xdata/images/hotel/max1024x768/365229953.jpg?k=a2c9dd21032af4967af2a17f877cae68e81e155db67f6249ca0d720dd6905349&o=&hp=1",
-        "image3": "https://im1.dineout.co.in/images/uploads/restaurant/sharpen/5/d/v/p51250-162652099260f2bda088329.jpg?tr=tr:n-xlarge",
-        "image4": "https://im1.dineout.co.in/images/uploads/restaurant/sharpen/5/s/s/p51250-164075829961cbfc1baba6a.jpg?tr=tr:n-xlarge",
-        "image5": "https://im1.dineout.co.in/images/uploads/restaurant/sharpen/5/s/e/p51250-15475466025c3dafea0c6eb.jpg?tr=tr:n-xlarge",
-        "Rating": "4 ⭐⭐⭐⭐",
-        "address": "Holiday Inn, Sardar Patel Marg, Shivaji Nagar, Bais Godam, Jaipur, Rajasthan 302007",
-        "coordinates": "26.90297649220897, 75.79235308053501",
-        "Range":"₹500-₹1000",
-        "cuisine":"Continental, North Indian, Chinese, South Indian, Fast Food"
-    },
-    {
-        "city": "Jodhpur",
-        "name": "Sankalp Restaurant",
-        "features": [
-            "AC",
-            "Wi-Fi",
-            "Ensuite Bathroom",
-            "King Size Bed"
+        "name": "City Palace",
+        "description": "A sprawling complex of courtyards, gardens, and buildings that was the home of the maharajas of Jaipur. It is part museum and part palace, so you can see the royal apartments and a vast collection of artifacts",
+        "imageUrls": [
+            "https://t4.ftcdn.net/jpg/01/86/03/91/360_F_186039131_DtzFlukfaDy0Fdsgq6HzJwGGJ1II5Ls9.jpg",
+            "https://www.weddingsbyneerajkamra.com/wedding-venue/jaipur/city-palace-jaipur/images/slide4.jpg"
         ],
-        "image1": "https://content.jdmagicbox.com/comp/ahmedabad/j9/079pxx79.xx79.191209104538.c6j9/catalogue/sankalp-the-test-of-south-ahmedabad-sjdolp8jwq.jpg",
-        "image2": "https://media-cdn.tripadvisor.com/media/photo-s/0e/24/41/b6/sankalp-restaurant.jpg",
-        "image3": "https://sankalp-group.org/wp-content/uploads/2022/12/Sankalp-Restaurant.jpg",
-        "image4": "https://media-cdn.tripadvisor.com/media/photo-s/0e/8c/40/57/restaurant.jpg",
-        "image5": "https://static.toiimg.com/thumb/40567209/sankalp.jpg?width=1200&height=900",
-        "Rating": "5 ⭐⭐⭐⭐⭐ ",
-        "address": "Residency Rd, Near Manidhari Hospital, Sindhi Colony, Sector-E, Sardarpura, Jodhpur, Rajasthan 342003",
-        "coordinates": "26.27453009166386, 73.00463558479342",
-        "Range":"₹500-₹1500",
-        "cuisine":"Continental, North Indian, Chinese, South Indian, Fast Food"
-    },
-    {
-        "city": "Jodhpur",
-        "name": "Indigo Restaurant",
-        "image1": "https://media-cdn.tripadvisor.com/media/photo-s/14/82/24/b0/indigo-restaurant.jpg",
-        "image2": "https://media-cdn.tripadvisor.com/media/photo-s/1b/42/6b/58/vista-desde-la-terraza.jpg",
-        "image3": "https://static1.squarespace.com/static/58ef10ecbe6594f0ff53acba/5ea97edea4f55b486c2d712a/63bd3549f094a67bf976cb87/1674138862241/FullSizeRender.jpg?format=1500w",
-        "image4": "https://img.restaurantguru.com/c1e3-Indigo-Restaurant-Jodhpur-food-1.jpg",
-        "image5": "https://img.restaurantguru.com/ra73-Indigo-Restaurant-dishes-2022-10-1.jpg",
-        "Rating": "4 ⭐⭐⭐⭐",
-        "address": "72XC+2PP, Roof Top Gouri Haveli, Laykan Mohalla, Gulab Sagar, Jodhpur, Rajasthan 342001",
-        "coordinates": "26.297743453761314, 73.02177518051556",
-        "Range":"₹1000-₹2000",
-        "cuisine":"Continental, North Indian, Chinese, South Indian, Fast Food"
+        "address": "Gangori Bazaar, J.D.A. Market, Pink City, Jaipur, Rajasthan 302002",
+        "cost": "100",
+        "link": "https://en.wikipedia.org/wiki/City_Palace,_Jaipur.",
+        "timing": "9:30 am-7:30 pm"
     }
 ]
