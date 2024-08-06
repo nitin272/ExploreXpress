@@ -28,8 +28,12 @@ const Navbar = () => {
 
       if (authType === 'manual') {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
+
+        
         const { userId, token } = user;
         if (!userId) {
+
+
           console.log('No userId found, aborting fetch operation.');
           return;
         }

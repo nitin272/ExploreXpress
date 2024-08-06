@@ -18,11 +18,13 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required']
 
   },
-  
+
   imageUrl: {
     
     type: String,
+    
     default: function() {
+
       const initial = encodeURIComponent(this.username[0].toUpperCase());
       return `https://ui-avatars.com/api/?name=${initial}&background=random&color=fff&length=1`;
     }

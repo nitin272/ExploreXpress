@@ -23,9 +23,15 @@ const Account = () => {
         }
 
         const fetchUserData = async () => {
+
+
             try {
                 const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+
+
                 const { userId, token } = storedUserData.user || storedUserData;
+
+                
                 if (!userId) {
                     navigate('/login');
                     return;
