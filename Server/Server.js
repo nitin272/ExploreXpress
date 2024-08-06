@@ -23,14 +23,31 @@ app.use(session({
 
 
 
+const allowedOrigins = [
+  'http://localhost:4500', "https://explorexpress-n2ek.onrender.com",
+  // other allowed origins can be added here
+];
+
 const corsOptions = {
-  origin: '*',
+
+
+  origin: function (origin, callback) {
+
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true,
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200, // For legacy browser support
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
-
+app.options('*', cors(corsOptions)); // Enable pre-flight requests for all routes
 
 
 const Login = require("./routes/Login")
