@@ -16,8 +16,11 @@ const userSchema = new mongoose.Schema({
   password: { 
     type: String, 
     required: [true, 'Password is required']
+
   },
+  
   imageUrl: {
+    
     type: String,
     default: function() {
       const initial = encodeURIComponent(this.username[0].toUpperCase());
