@@ -17,26 +17,36 @@ const Account = () => {
 
     useEffect(() => {
         const authType = localStorage.getItem('authType');
-        if (!authType) {
+        const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+
+        // If no user is logged in, redirect to login
+        if (!storedUserData) {
             navigate('/login');
             return;
         }
 
         const fetchUserData = async () => {
-
-
             try {
-                const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
+                let userId, token;
 
+                // Handle Google authentication or manual authentication based on authType
+                if (authType === 'google') {
+                    userId = storedUserData._id; // For Google Auth, _id is used
+                    token = storedUserData.token;
+                } else if (authType === 'manual') {
+                    userId = storedUserData.userId; // For manual Auth, userId is used
+                    token = storedUserData.token;
+                } else {
+                    throw new Error('Unknown authentication type.');
+                }
 
-                const { userId, token } = storedUserData.user || storedUserData;
-
-                
+                // Check if userId exists, otherwise redirect to login
                 if (!userId) {
                     navigate('/login');
                     return;
                 }
 
+                // Fetch user data from API using userId
                 const response = await fetch(`${apiurl}/user/${userId}`, {
                     method: 'GET',
                     headers: {
@@ -45,21 +55,25 @@ const Account = () => {
                     },
                 });
 
+                // Check if the response is successful
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
+                // Check if the response is JSON
                 const contentType = response.headers.get('content-type');
                 if (contentType && contentType.indexOf('application/json') !== -1) {
                     const data = await response.json();
+
+                    // Update the user data with the relevant fields
                     setUserData({
-                        name: data.username,
+                        name: data.displayName || data.username, // Adjust according to your data structure
                         email: data.email,
-                        profileImageUrl: data.imageUrl,
+                        profileImageUrl: data.image || data.profileImageUrl,
                         coverImageUrl: data.coverImageUrl || '',
                     });
                 } else {
-                    throw new Error('Oops! Unexpected response format.');
+                    throw new Error('Unexpected response format.');
                 }
                 setLoading(false);
             } catch (error) {
@@ -71,6 +85,11 @@ const Account = () => {
 
         fetchUserData();
     }, [apiurl, navigate]);
+
+
+    // JSX rendering logic re
+
+
 
     const handleLogout = () => {
         localStorage.clear();
@@ -248,7 +267,7 @@ const Account = () => {
                     <div className="relative flex flex-col items-center sm:flex-row sm:justify-between px-6 py-8">
                         <div className="relative mb-6 sm:mb-0">
                             <img
-                                src={userData.profileImageUrl || 'https://via.placeholder.com/150'}
+                                src={userData?.profileImageUrl || 'https://via.placeholder.com/150'}
                                 alt="Profile"
                                 className="h-32 w-32 sm:h-48 sm:w-48 rounded-full ring-4 ring-white object-cover object-center"
                                 style={{ position: 'relative', top: '-50px' }}
