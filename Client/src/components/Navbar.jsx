@@ -51,7 +51,7 @@ const Navbar = () => {
         }
       } else if (authType === 'google') {
         try {
-          const response = await axios.get(`${apiurl}/login/success`, { withCredentials: true });
+          const response = await axios.get(`${apiurl}/login/sucess`, { withCredentials: true });
           if (response.data && response.data.user) {
             localStorage.setItem('user', JSON.stringify(response.data.user));
             setUserName(response.data.user.displayName);
