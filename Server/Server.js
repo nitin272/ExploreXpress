@@ -24,7 +24,7 @@ app.use(session({
 
 
 const corsOptions = {
-  origin: 'http://localhost:4500',  // Allow only localhost:4500
+  origin: 'http://localhost:4500' || "https://explorexpress-n2ek.onrender.com" // Allow only localhost:4500
   credentials: true,
   optionsSuccessStatus: 200 // for legacy browsers
 };
