@@ -24,7 +24,7 @@ app.use(session({
 
 
 const corsOptions = {
-  origin: "http://exploreexpresss.netlify.app", // Add a comma here
+  origin: "https://exploreexpresss.netlify.app", // Add a comma here
   credentials: true,
   optionsSuccessStatus: 200 // for legacy browsers
 };
