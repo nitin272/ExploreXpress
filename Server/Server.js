@@ -24,7 +24,7 @@ app.use(session({
 
 
 const corsOptions = {
-  origin: 'http://localhost:4500' || "https://exploreexpresss.netlify.app" // Allow only localhost:4500
+  origin: "http://exploreexpresss.netlify.app" // Allow only localhost:4500
   credentials: true,
   optionsSuccessStatus: 200 // for legacy browsers
 };
