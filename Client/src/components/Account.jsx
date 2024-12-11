@@ -6,7 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import './Account.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Footer from './Footer';
-import config from '../assets/api.json';
+
 
 const Account = () => {
     const [userData, setUserData] = useState(null);
@@ -15,7 +15,9 @@ const Account = () => {
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
 
-    const apiurl = import.meta.env.VITE_APP_API_URL;
+    const apiurl = "https://explorexpress-n2ek.onrender.com";
+
+
     useEffect(() => {
         const authType = localStorage.getItem('authType');
         if (!authType) {

@@ -7,7 +7,7 @@ import Loading from '../components/Load'; // Make sure this is the correct impor
 const UserContext = createContext();
 
 
-const apiurl = import.meta.env.VITE_APP_API_URL;
+const apiurl = "https://explorexpress-n2ek.onrender.com";
 
 const Hotel = () => {
   const navigate = useNavigate();

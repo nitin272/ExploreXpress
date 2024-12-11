@@ -10,7 +10,7 @@ const MidHome = () => {
     const [error, setError] = useState(null);
 
    
-    const apiurl = import.meta.env.VITE_APP_API_URL;
+    const apiurl = "https://explorexpress-n2ek.onrender.com";
 
     
     useEffect(() => {

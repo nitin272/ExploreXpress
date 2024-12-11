@@ -27,7 +27,7 @@ app.use(session({
 
 app.use(express.json());
 const corsOptions = {
-  origin: 'https://explorexpress-n2ek.onrender.com',  // This should match the URL of your frontend application
+  origin: ['http://explorexpress-n2ek.onrender.com', 'http://localhost:4500'], 
   credentials: true, // This is important for cookies/token and basic auth
 };
 
@@ -50,7 +50,7 @@ const Places = require('./routes/Places')
 
 const URI = process.env.MONGODB_URI;
 
-mongoose.connect(URI, { dbName: "Exploreexpress" })
+mongoose.connect("mongodb+srv://nitinsoni:Nitin@cluster0.nsd72yp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", { dbName: "Shop" })
   .then(() => console.log("Connection successful"))
 
 

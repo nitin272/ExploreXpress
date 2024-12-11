@@ -11,7 +11,7 @@ const FamousPlaces = () => {
   const navigate = useNavigate();
 
 
-  const apiurl = import.meta.env.VITE_APP_API_URL;
+  const apiurl = "https://explorexpress-n2ek.onrender.com";
 
   useEffect(() => {
     setLoading(true);

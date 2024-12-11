@@ -9,9 +9,10 @@ const AuthForm = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const navigate = useNavigate();
+  
+  const apiurl = "https://explorexpress-n2ek.onrender.com";
 
-
-  const apiurl = import.meta.env.VITE_APP_API_URL;
+  
 
   const handleAuth = async (isSignUp, userData) => {
     try {

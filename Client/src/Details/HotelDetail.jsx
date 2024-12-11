@@ -25,7 +25,7 @@ L.Icon.Default.mergeOptions({
 
 
 
-const apiurl = import.meta.env.VITE_APP_API_URL;
+const apiurl = "https://explorexpress-n2ek.onrender.com";
 
 const HotelDetail = () => {
     const { hotelId } = useParams();

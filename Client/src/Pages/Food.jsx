@@ -8,7 +8,7 @@ import Loading from '../components/Load';  // Import your Loading component
 const UserContext = createContext();
 
 
-const apiurl = import.meta.env.VITE_APP_API_URL;
+const apiurl = "https://explorexpress-n2ek.onrender.com";
 
 const Restaurant = () => {
   const navigate = useNavigate();
