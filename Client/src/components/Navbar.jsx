@@ -29,7 +29,7 @@ const Navbar = () => {
       if (authType === 'manual') {
         const user = JSON.parse(localStorage.getItem('user') || '{}');
 
-        
+
         const { userId, token } = user;
         if (!userId) {
 
@@ -44,7 +44,9 @@ const Navbar = () => {
               'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
             }
+            
           });
+          console.log(token);
           setUserName(response.data.name);
         } catch (error) {
           console.error('Error during fetch:', error);
@@ -71,6 +73,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.clear();
+    console.clear();
     navigate('/login');
   };
 

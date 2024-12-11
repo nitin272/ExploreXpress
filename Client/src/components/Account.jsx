@@ -23,20 +23,13 @@ const Account = () => {
         }
 
         const fetchUserData = async () => {
-
-
             try {
                 const storedUserData = JSON.parse(localStorage.getItem('user') || '{}');
-
-
                 const { userId, token } = storedUserData.user || storedUserData;
-
-                
                 if (!userId) {
                     navigate('/login');
                     return;
                 }
-
                 const response = await fetch(`${apiurl}/user/${userId}`, {
                     method: 'GET',
                     headers: {
@@ -44,11 +37,9 @@ const Account = () => {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
-
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-
                 const contentType = response.headers.get('content-type');
                 if (contentType && contentType.indexOf('application/json') !== -1) {
                     const data = await response.json();

@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   imageUrl: {
     
     type: String,
-    
+
     default: function() {
 
       const initial = encodeURIComponent(this.username[0].toUpperCase());
@@ -31,6 +31,7 @@ const userSchema = new mongoose.Schema({
   },
   coverImageUrl: String
 });
+
 
 userSchema.pre('save', async function (next) {
   if (this.isModified('password') && this.password) {
