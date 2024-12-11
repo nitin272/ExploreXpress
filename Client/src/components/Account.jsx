@@ -15,7 +15,7 @@ const Account = () => {
     const [isEditing, setIsEditing] = useState(false);
     const navigate = useNavigate();
 
-    const apiurl = "https://explorexpress-n2ek.onrender.com";
+    const apiurl = import.meta.env.VITE_APP_API_URL;
 
 
     useEffect(() => {
@@ -140,7 +140,7 @@ const Account = () => {
                     {userData ? (
                         <>
                             <div className='flex-shrink-0 w-56 h-56 rounded-full overflow-hidden mt-4 md:mt-0 md:mr-6 transition duration-300 ease-in-out transform hover:scale-110 hover:rotate-6'>
-                                <img src={userData.imageUrl || 'defaultProfileImageUrl'} alt="Profile" className="w-full h-full object-cover" />
+                                <img src={userData?.imageUrl } alt="Profile" className="w-full h-full object-cover" />
                             </div>
                             <div className='flex flex-col flex-1'>
                                 {isEditing && localStorage.getItem('authType') === 'manual' ? (

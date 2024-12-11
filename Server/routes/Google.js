@@ -86,8 +86,8 @@ passport.deserializeUser(async (id, done) => {
 app.get("/auth/google",passport.authenticate("google",{scope:["profile","email"]}));
 
 app.get("/auth/google/callback",passport.authenticate("google",{
-    successRedirect:"https://explore-xpress.vercel.app/",
-    failureRedirect:"https://explore-xpress.vercel.app/login"
+    successRedirect:"http://localhost:4600/",
+    failureRedirect:"http://localhost:4600/login"
 }))
 
 app.get("/login/success",async(req,res)=>{

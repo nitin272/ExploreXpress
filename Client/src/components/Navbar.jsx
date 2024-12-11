@@ -12,7 +12,7 @@ const Navbar = () => {
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
 
-  const apiurl = "https://explorexpress-n2ek.onrender.com";
+  const apiurl = import.meta.env.VITE_APP_API_URL;
   const isLoggedIn = () => localStorage.getItem('authType') !== null;
 
   useEffect(() => {
